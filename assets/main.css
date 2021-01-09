@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 400; color: #a9dc76; }
 /** Links */
 a { color: #2a7ae2; text-decoration: none; }
 
-a:visited { color: #1756a9; }
+a:visited { color: #2a7ae2; }
 
 a:hover { color: #fd971f; text-decoration: underline; }
 
@@ -38,7 +38,7 @@ a:hover { color: #fd971f; text-decoration: underline; }
 .social-media-list a:hover .username { text-decoration: underline; }
 
 /** Blockquotes */
-blockquote { color: #75715E; border-left: 4px solid #d5d3ca; padding-left: 15px; font-size: 18px; letter-spacing: -1px; font-style: italic; }
+blockquote { color: #d5d3ca; border-left: 4px solid #d5d3ca; padding-left: 15px; font-size: 14.4px; letter-spacing: -1px; font-style: italic; }
 
 blockquote > :last-child { margin-bottom: 0; }
 
@@ -154,7 +154,7 @@ table td { border: 1px solid #d5d3ca; }
 /** Syntax highlighting styles */
 .highlight { background: #fff; }
 
-.highlighter-rouge .highlight { background: #eef; }
+.highlighter-rouge .highlight { background: #272822; }
 
 .highlight .c { color: #998; font-style: italic; }
 
@@ -210,13 +210,13 @@ table td { border: 1px solid #d5d3ca; }
 
 .highlight .s { color: #d14; }
 
-.highlight .na { color: #008080; }
+.highlight .na { color: #A6E22E; }
 
-.highlight .nb { color: #0086B3; }
+.highlight .nb { color: #E6DB74; }
 
 .highlight .nc { color: #458; font-weight: bold; }
 
-.highlight .no { color: #008080; }
+.highlight .no { color: #A6E22E; }
 
 .highlight .ni { color: #800080; }
 
@@ -226,9 +226,9 @@ table td { border: 1px solid #d5d3ca; }
 
 .highlight .nn { color: #555; }
 
-.highlight .nt { color: #000080; }
+.highlight .nt { color: #66D9EF; }
 
-.highlight .nv { color: #008080; }
+.highlight .nv { color: #A6E22E; }
 
 .highlight .ow { font-weight: bold; }
 
@@ -266,11 +266,11 @@ table td { border: 1px solid #d5d3ca; }
 
 .highlight .bp { color: #999; }
 
-.highlight .vc { color: #008080; }
+.highlight .vc { color: #A6E22E; }
 
-.highlight .vg { color: #008080; }
+.highlight .vg { color: #A6E22E; }
 
-.highlight .vi { color: #008080; }
+.highlight .vi { color: #A6E22E; }
 
 .highlight .il { color: #099; }
 

@@ -1,4 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-01-05T11:38:01-06:00</updated><id>/feed.xml</id><title type="html">ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Install Jenkins on Windows 10</title><link href="/jekyll/update/2021/01/03/settingup-jekyll.html" rel="alternate" type="text/html" title="Install Jenkins on Windows 10" /><published>2021-01-03T00:00:00-06:00</published><updated>2021-01-03T00:00:00-06:00</updated><id>/jekyll/update/2021/01/03/settingup-jekyll</id><content type="html" xml:base="/jekyll/update/2021/01/03/settingup-jekyll.html">&lt;p&gt;&lt;img src=&quot;/assets/jekyll-banner.png&quot; alt=&quot;JekyllIcon&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-01-09T09:24:12-06:00</updated><id>/feed.xml</id><title type="html">ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Install Minecraft Server on Arch Linux</title><link href="/linux/2021/01/06/install-mcserver.html" rel="alternate" type="text/html" title="Install Minecraft Server on Arch Linux" /><published>2021-01-06T00:00:00-06:00</published><updated>2021-01-06T00:00:00-06:00</updated><id>/linux/2021/01/06/install-mcserver</id><content type="html" xml:base="/linux/2021/01/06/install-mcserver.html">&lt;ol&gt;
+  &lt;li&gt;Install &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Java&lt;/code&gt; for linux
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;pacman &lt;span class=&quot;nt&quot;&gt;-Syu&lt;/span&gt; java
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;If you want to run mcserver in the background, you can install screen
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;pacman &lt;span class=&quot;nt&quot;&gt;-Syu&lt;/span&gt; screen
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Create a folder where you want to store the minecraft server
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mcserver
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;mcserver
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Download minecraft server from &lt;a href=&quot;https://www.minecraft.net/en-us/download/server&quot;&gt;mojang&lt;/a&gt;
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget https://launcher.mojang.com/v1/objects/35139deedbd5182953cf1caa23835da59ca3d7cd/server.jar
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Create a new screen session
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;screen &lt;span class=&quot;nt&quot;&gt;-S&lt;/span&gt; mcserver
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Run the server
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;java &lt;span class=&quot;nt&quot;&gt;-Xmx1024M&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-Xms1024M&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; minecraft_server.1.16.4.jar nogui 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Minimize or set the server to background by pressing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CTRL + a, d&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Note: During the first run, the server will generate &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eula.txt&lt;/code&gt;. Update the text file and set the value from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eula=false&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eula=true&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name></name></author><category term="linux" /><summary type="html">Install Java for linux $ sudo pacman -Syu java</summary></entry><entry><title type="html">Install Jekyll on Windows 10</title><link href="/jekyll/update/2021/01/03/settingup-jekyll.html" rel="alternate" type="text/html" title="Install Jekyll on Windows 10" /><published>2021-01-03T00:00:00-06:00</published><updated>2021-01-03T00:00:00-06:00</updated><id>/jekyll/update/2021/01/03/settingup-jekyll</id><content type="html" xml:base="/jekyll/update/2021/01/03/settingup-jekyll.html">&lt;p&gt;&lt;img src=&quot;/assets/jekyll-banner.png&quot; alt=&quot;JekyllIcon&quot; /&gt;&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Not needed but installing a terminal emulator helps a lot like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cmder&lt;/code&gt;. Installer can be found &lt;a href=&quot;https://cmder.net/&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
