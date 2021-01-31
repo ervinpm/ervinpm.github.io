@@ -6,19 +6,21 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"><!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>$ ervinpm | Still working on it</title>
+<title>Install Jekyll on Windows 10 | $ ervinpm</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="$ ervinpm" />
+<meta property="og:title" content="Install Jekyll on Windows 10" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Still working on it" />
 <meta property="og:description" content="Still working on it" />
-<link rel="canonical" href="/" />
-<meta property="og:url" content="/" />
+<link rel="canonical" href="/coding/2021/01/03/settingup-jekyll.html" />
+<meta property="og:url" content="/coding/2021/01/03/settingup-jekyll.html" />
 <meta property="og:site_name" content="$ ervinpm" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-03T00:00:00-06:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="$ ervinpm" />
+<meta property="twitter:title" content="Install Jekyll on Windows 10" />
 <script type="application/ld+json">
-{"@type":"WebSite","description":"Still working on it","url":"/","headline":"$ ervinpm","name":"$ ervinpm","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/coding/2021/01/03/settingup-jekyll.html"},"@type":"BlogPosting","description":"Still working on it","url":"/coding/2021/01/03/settingup-jekyll.html","headline":"Install Jekyll on Windows 10","dateModified":"2021-01-03T00:00:00-06:00","datePublished":"2021-01-03T00:00:00-06:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="$ ervinpm" /></head>
   <body><header class="site-header" role="banner">
@@ -38,47 +40,31 @@
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home"><h1 id="schrodingers-notes">Schrodinger’s notes</h1>
-<p>You have reached a blog site that contains notes I made learning stuff about coding. You may find them useful or harmful ^_^</p>
-<h2 class="post-list-heading">Posts</h2>
-    <ul class="post-list"><li><span class="post-meta">Jan 30, 2021</span>
-        <h3>
-          <a class="post-link" href="/minecraft/optfine/archlinux/2021/01/30/kubernetes-internet.html">
-            No Internet in Kubernetes Pods
-          </a>
-        </h3></li><li><span class="post-meta">Jan 23, 2021</span>
-        <h3>
-          <a class="post-link" href="/minecraft/optfine/2021/01/23/multimc-optifine-1.16.5.html">
-            Install Optifine (Fabric) for MultiMC Minecraft 1.16.5
-          </a>
-        </h3></li><li><span class="post-meta">Jan 10, 2021</span>
-        <h3>
-          <a class="post-link" href="/coding/2021/01/10/install-mongodb.html">
-            Install MongoDB on Windows 10
-          </a>
-        </h3></li><li><span class="post-meta">Jan 9, 2021</span>
-        <h3>
-          <a class="post-link" href="/coding/2021/01/09/publish-npm-package.html">
-            Publishing NPM packages
-          </a>
-        </h3></li><li><span class="post-meta">Jan 6, 2021</span>
-        <h3>
-          <a class="post-link" href="/coding/linux/minecraft/2021/01/06/install-mcserver.html">
-            Install Minecraft Server on Arch Linux
-          </a>
-        </h3></li><li><span class="post-meta">Jan 3, 2021</span>
-        <h3>
-          <a class="post-link" href="/coding/2021/01/03/settingup-jekyll.html">
-            Install Jekyll on Windows 10
-          </a>
-        </h3></li><li><span class="post-meta">Jan 2, 2021</span>
-        <h3>
-          <a class="post-link" href="/jekyll/update/2021/01/02/welcome-to-jekyll.html">
-            Welcome to Jekyll!
-          </a>
-        </h3></li></ul>
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
-    <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p></div>
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Install Jekyll on Windows 10</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2021-01-03T00:00:00-06:00" itemprop="datePublished">Jan 3, 2021
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><img src="/assets/jekyll-banner.png" alt="JekyllIcon" /></p>
+
+<ol>
+  <li>Not needed but installing a terminal emulator helps a lot like <code class="language-plaintext highlighter-rouge">cmder</code>. Installer can be found <a href="https://cmder.net/">here</a>.</li>
+  <li>Also helps to get a good text editor like <a href="https://code.visualstudio.com/">vscode</a>.</li>
+  <li>Install <a href="https://rubyinstaller.org/downloads/">Ruby</a>. Make sure to install the one that includes DevKit.</li>
+  <li>Install Jekyll by executing this command:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gem <span class="nb">install </span>jekyll bundler
+</code></pre></div>    </div>
+  </li>
+  <li>At the time of writing, Ruby 3.0 does not include by default a dependency of Jekyll called <code class="language-plaintext highlighter-rouge">webrick</code>. In the generetaed jekyll site directory, execute the following command: <code class="language-plaintext highlighter-rouge">bundle add webrick</code>.</li>
+</ol>
+
+  </div><a class="u-url" href="/coding/2021/01/03/settingup-jekyll.html" hidden></a>
+</article>
 
       </div>
     </main><footer class="site-footer h-card">
