@@ -6,19 +6,21 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"><!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>$ ervinpm | Still working on it</title>
+<title>Use kubectl for remote cluster | $ ervinpm</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="$ ervinpm" />
+<meta property="og:title" content="Use kubectl for remote cluster" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Still working on it" />
-<meta property="og:description" content="Still working on it" />
-<link rel="canonical" href="/" />
-<meta property="og:url" content="/" />
+<meta name="description" content="Kubectl Installation After installing Kubernetes on Bare Metal, you might want to do kubectl commands on a remote machine. To do that, you’ll have to install kubectl on your machine. Installation is found here:" />
+<meta property="og:description" content="Kubectl Installation After installing Kubernetes on Bare Metal, you might want to do kubectl commands on a remote machine. To do that, you’ll have to install kubectl on your machine. Installation is found here:" />
+<link rel="canonical" href="/coding/kubernetes/2021/02/07/kubernetes-remote.html" />
+<meta property="og:url" content="/coding/kubernetes/2021/02/07/kubernetes-remote.html" />
 <meta property="og:site_name" content="$ ervinpm" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-02-07T00:00:00-06:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="$ ervinpm" />
+<meta property="twitter:title" content="Use kubectl for remote cluster" />
 <script type="application/ld+json">
-{"@type":"WebSite","description":"Still working on it","url":"/","headline":"$ ervinpm","name":"$ ervinpm","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/coding/kubernetes/2021/02/07/kubernetes-remote.html"},"@type":"BlogPosting","description":"Kubectl Installation After installing Kubernetes on Bare Metal, you might want to do kubectl commands on a remote machine. To do that, you’ll have to install kubectl on your machine. Installation is found here:","url":"/coding/kubernetes/2021/02/07/kubernetes-remote.html","headline":"Use kubectl for remote cluster","dateModified":"2021-02-07T00:00:00-06:00","datePublished":"2021-02-07T00:00:00-06:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="$ ervinpm" /></head>
   <body><header class="site-header" role="banner">
@@ -38,57 +40,30 @@
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home"><h1 id="schrodingers-notes">Schrodinger’s notes</h1>
-<p>You have reached a blog site that contains notes I made learning stuff about coding. You may find them useful or harmful ^_^</p>
-<h2 class="post-list-heading">Posts</h2>
-    <ul class="post-list"><li><span class="post-meta">Feb 7, 2021</span>
-        <h3>
-          <a class="post-link" href="/coding/kubernetes/2021/02/07/kubernetes-remote.html">
-            Use kubectl for remote cluster
-          </a>
-        </h3></li><li><span class="post-meta">Jan 31, 2021</span>
-        <h3>
-          <a class="post-link" href="/coding/angular/2021/01/31/angular-bootstrap.html">
-            Bootstrap in Angular
-          </a>
-        </h3></li><li><span class="post-meta">Jan 30, 2021</span>
-        <h3>
-          <a class="post-link" href="/kubernetes/archlinux/2021/01/30/kubernetes-internet.html">
-            No Internet in Kubernetes Pods
-          </a>
-        </h3></li><li><span class="post-meta">Jan 23, 2021</span>
-        <h3>
-          <a class="post-link" href="/minecraft/optfine/2021/01/23/multimc-optifine-1.16.5.html">
-            Install Optifine (Fabric) for MultiMC Minecraft 1.16.5
-          </a>
-        </h3></li><li><span class="post-meta">Jan 10, 2021</span>
-        <h3>
-          <a class="post-link" href="/coding/2021/01/10/install-mongodb.html">
-            Install MongoDB on Windows 10
-          </a>
-        </h3></li><li><span class="post-meta">Jan 9, 2021</span>
-        <h3>
-          <a class="post-link" href="/coding/2021/01/09/publish-npm-package.html">
-            Publishing NPM packages
-          </a>
-        </h3></li><li><span class="post-meta">Jan 6, 2021</span>
-        <h3>
-          <a class="post-link" href="/coding/linux/minecraft/2021/01/06/install-mcserver.html">
-            Install Minecraft Server on Arch Linux
-          </a>
-        </h3></li><li><span class="post-meta">Jan 3, 2021</span>
-        <h3>
-          <a class="post-link" href="/coding/2021/01/03/settingup-jekyll.html">
-            Install Jekyll on Windows 10
-          </a>
-        </h3></li><li><span class="post-meta">Jan 2, 2021</span>
-        <h3>
-          <a class="post-link" href="/jekyll/update/2021/01/02/welcome-to-jekyll.html">
-            Welcome to Jekyll!
-          </a>
-        </h3></li></ul>
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
-    <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p></div>
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Use kubectl for remote cluster</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2021-02-07T00:00:00-06:00" itemprop="datePublished">Feb 7, 2021
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="kubectl-installation">Kubectl Installation</h2>
+<p>After installing Kubernetes on Bare Metal, you might want to do <code class="language-plaintext highlighter-rouge">kubectl</code> commands on a remote machine. To do that, you’ll have to install <code class="language-plaintext highlighter-rouge">kubectl</code> on your machine. Installation is found here:</p>
+
+<p>https://kubernetes.io/docs/tasks/tools/install-kubectl/</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>After instaling kubectl, how do you tell how to connect to your cluster? To do that, you’ll have to go to the kubernetes master node and copy the config file. This is found by default in: <code class="language-plaintext highlighter-rouge">~.kube/config</code>. Copy that file or the contents and create a similar structured folder. In windows, it looks something like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\username\.kube\config
+</code></pre></div></div>
+
+  </div><a class="u-url" href="/coding/kubernetes/2021/02/07/kubernetes-remote.html" hidden></a>
+</article>
 
       </div>
     </main><footer class="site-footer h-card">
