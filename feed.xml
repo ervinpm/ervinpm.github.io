@@ -1,4 +1,148 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-02-07T15:07:03-06:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Use kubectl for remote cluster</title><link href="/coding/kubernetes/2021/02/07/kubernetes-remote.html" rel="alternate" type="text/html" title="Use kubectl for remote cluster" /><published>2021-02-07T00:00:00-06:00</published><updated>2021-02-07T00:00:00-06:00</updated><id>/coding/kubernetes/2021/02/07/kubernetes-remote</id><content type="html" xml:base="/coding/kubernetes/2021/02/07/kubernetes-remote.html">&lt;h2 id=&quot;kubectl-installation&quot;&gt;Kubectl Installation&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-02-15T11:06:35-06:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Installing Dynamic NFS Persistent Volume in Kubernetes</title><link href="/coding/kubernetes/2021/02/15/kubernetes-dynamic-nfs.html" rel="alternate" type="text/html" title="Installing Dynamic NFS Persistent Volume in Kubernetes" /><published>2021-02-15T00:00:00-06:00</published><updated>2021-02-15T00:00:00-06:00</updated><id>/coding/kubernetes/2021/02/15/kubernetes-dynamic-nfs</id><content type="html" xml:base="/coding/kubernetes/2021/02/15/kubernetes-dynamic-nfs.html">&lt;h2 id=&quot;prepare-a-nfs&quot;&gt;Prepare a NFS&lt;/h2&gt;
+&lt;p&gt;You will need the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IP&lt;/code&gt; address of the NFS server and the folder path.&lt;/p&gt;
+
+&lt;h2 id=&quot;clone-the-nfs-provisioner&quot;&gt;Clone the NFS Provisioner&lt;/h2&gt;
+&lt;p&gt;NFS Provisioner &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YAML&lt;/code&gt; files are found in Kubernetes SIGS repository. This assumes that you already have git installed&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone git@github.com:kubernetes-sigs/nfs-subdir-external-provisioner.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;update-nfs-details&quot;&gt;Update NFS Details&lt;/h2&gt;
+&lt;p&gt;After cloning the repository, udpate &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;deployment.yaml&lt;/code&gt; and change the following to the nfs details that you have noted earlier&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;          &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;PROVISIONER_NAME&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;k8s-sigs.io/nfs-subdir-external-provisioner&lt;/span&gt;
+            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;NFS_SERVER&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;replace with NFS IP&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;NFS_PATH&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;replace with NFS Folder&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nfs-client-root&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;nfs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;replace with NFS IP&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;replace with NFS Folder&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-role-based-access-control-rbac&quot;&gt;Create Role Based Access Control (RBAC)&lt;/h2&gt;
+&lt;p&gt;This is needed to allow a pod to automatically create kubernetes objects that will provision Persistent Volumes&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; deploy/rbac.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;update-class-storage-file-configuration&quot;&gt;Update class storage file configuration&lt;/h2&gt;
+&lt;p&gt;You may want to update the default configuration to not delete the entire folder when a persistent volume is destroyed.&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;storage.k8s.io/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;StorageClass&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;managed-nfs-storage&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;provisioner&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;k8s-sigs.io/nfs-subdir-external-provisioner&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# or choose another name, must match deployment&apos;s env PROVISIONER_NAME&apos;&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;pathPattern&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;${.PVC.namespace}/${.PVC.annotations.nfs.io/storage-path}&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# waits for nfs.io/storage-path annotation, if not specified will accept as empty string.&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;onDelete&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;delete&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create the class storage object&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; deploy/class.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;testing&quot;&gt;Testing&lt;/h2&gt;
+&lt;p&gt;This is optional but recommended specially if this is the first time that you are doing this. The repository has test deployments.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; deploy/test-claim.yaml &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; deploy/test-pod.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Check the NFS Server and see if there is a folder with a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SUCCESS&lt;/code&gt; file name in it. If you see it, then all is set, you may delete the created test objects in your kubernetes installation.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl delete &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; deploy/test-pod.yaml &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; deploy/test-claim.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="kubernetes" /><summary type="html">Prepare a NFS You will need the IP address of the NFS server and the folder path.</summary></entry><entry><title type="html">How to enable NFS in Arch Linux</title><link href="/coding/archlinux/2021/02/13/arch-nfs.html" rel="alternate" type="text/html" title="How to enable NFS in Arch Linux" /><published>2021-02-13T00:00:00-06:00</published><updated>2021-02-13T00:00:00-06:00</updated><id>/coding/archlinux/2021/02/13/arch-nfs</id><content type="html" xml:base="/coding/archlinux/2021/02/13/arch-nfs.html">&lt;h2 id=&quot;enable-ntp&quot;&gt;Enable NTP&lt;/h2&gt;
+&lt;p&gt;First check if your NTP is enabled by doing a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;timedatectl&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;timedatectl
+               Local &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;: Sat 2021-02-13 11:16:22 CST
+           Universal &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;: Sat 2021-02-13 17:16:22 UTC
+                 RTC &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;: Sat 2021-02-13 17:16:20
+                Time zone: America/Chicago &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CST, &lt;span class=&quot;nt&quot;&gt;-0600&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+System clock synchronized: no
+              NTP service: inactive
+          RTC &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;TZ: no
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In the example above you’ll see that system clock is not synchronized and NTP service is disabled. You can enable it by this command.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;timedatectl set-ntp &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;hwclock &lt;span class=&quot;nt&quot;&gt;--systohc&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After enabling, your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;timedatectl&lt;/code&gt; should look something like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;timedatectl
+               Local &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;: Sat 2021-02-13 11:26:11 CST
+           Universal &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;: Sat 2021-02-13 17:26:11 UTC
+                 RTC &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;: Sat 2021-02-13 17:26:11
+                Time zone: America/Chicago &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CST, &lt;span class=&quot;nt&quot;&gt;-0600&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+System clock synchronized: &lt;span class=&quot;nb&quot;&gt;yes
+              &lt;/span&gt;NTP service: active
+          RTC &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;TZ: no
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Make sure to enable this to the rest of the clients who will connect to the NFS server.&lt;/p&gt;
+
+&lt;h2 id=&quot;install-nfs-utils&quot;&gt;Install NFS Utils&lt;/h2&gt;
+
+&lt;p&gt;In Arch Linux, you will need to install &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nfs-utils&lt;/code&gt;. This is done via pacman using the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;pacman &lt;span class=&quot;nt&quot;&gt;-S&lt;/span&gt; nfs-utils
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;update-exports-file&quot;&gt;Update exports file&lt;/h2&gt;
+
+&lt;p&gt;NFS is configured by a file called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/exports&lt;/code&gt;. You can use any text editor you like.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vim /etc/exports
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To share a file, the syntax is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;folder name&amp;gt; &amp;lt;ip&amp;gt;(&amp;lt;options&amp;gt;)&lt;/code&gt;. Here is an example that will share &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;myawesomefolder&lt;/code&gt; to the entire network. Relace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*&lt;/code&gt; to a specific IP address if you want:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/home/myuser/myawesomefolder    &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;rw,sync&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Apply the changes by doing a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;exportfs&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;exportfs &lt;span class=&quot;nt&quot;&gt;-rav&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Enable the NFS service&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--now&lt;/span&gt; nfs-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;verify-shared-exports&quot;&gt;Verify shared exports&lt;/h2&gt;
+
+&lt;p&gt;In the client, you can verify the shared folders via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showmount&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;showmount &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; 192.168.1.101
+Export list &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;192.168.1.101:
+/home/myuser/myawesomefolder &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-the-mounting-directory&quot;&gt;Create the mounting directory&lt;/h2&gt;
+
+&lt;p&gt;The shared folder will need a target directory. Create the new directory via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mkdir&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;myawesomefolder
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls
+&lt;/span&gt;myawsomefolder
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;mount-the-shared-folder&quot;&gt;Mount the shared folder&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; nfs 192.168.1.101:/home/myuser/myawesomefolder myawesomefolder
+Created symlink /run/systemd/system/remote-fs.target.wants/rpc-statd.service → /usr/lib/systemd/system/rpc-statd.service.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="archlinux" /><summary type="html">Enable NTP First check if your NTP is enabled by doing a timedatectl command:</summary></entry><entry><title type="html">Use kubectl for remote cluster</title><link href="/coding/kubernetes/2021/02/07/kubernetes-remote.html" rel="alternate" type="text/html" title="Use kubectl for remote cluster" /><published>2021-02-07T00:00:00-06:00</published><updated>2021-02-07T00:00:00-06:00</updated><id>/coding/kubernetes/2021/02/07/kubernetes-remote</id><content type="html" xml:base="/coding/kubernetes/2021/02/07/kubernetes-remote.html">&lt;h2 id=&quot;kubectl-installation&quot;&gt;Kubectl Installation&lt;/h2&gt;
 &lt;p&gt;After installing Kubernetes on Bare Metal, you might want to do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; commands on a remote machine. To do that, you’ll have to install &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; on your machine. Installation is found here:&lt;/p&gt;
 
 &lt;p&gt;https://kubernetes.io/docs/tasks/tools/install-kubectl/&lt;/p&gt;
@@ -174,20 +318,4 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;At the time of writing, Ruby 3.0 does not include by default a dependency of Jekyll called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;webrick&lt;/code&gt;. In the generetaed jekyll site directory, execute the following command: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle add webrick&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;</content><author><name></name></author><category term="coding" /><summary type="html"></summary></entry><entry><title type="html">Welcome to Jekyll!</title><link href="/jekyll/update/2021/01/02/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2021-01-02T13:16:44-06:00</published><updated>2021-01-02T13:16:44-06:00</updated><id>/jekyll/update/2021/01/02/welcome-to-jekyll</id><content type="html" xml:base="/jekyll/update/2021/01/02/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
-
-&lt;p&gt;Jekyll requires blog post files to be named according to the following format:&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YEAR-MONTH-DAY-title.MARKUP&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YEAR&lt;/code&gt; is a four-digit number, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MONTH&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DAY&lt;/code&gt; are both two-digit numbers, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MARKUP&lt;/code&gt; is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
-
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;Tom&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints &apos;Hi, Tom&apos; to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry></feed>
+&lt;/ol&gt;</content><author><name></name></author><category term="coding" /><summary type="html"></summary></entry></feed>
