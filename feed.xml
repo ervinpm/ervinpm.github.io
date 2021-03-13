@@ -1,4 +1,167 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-03-07T10:52:59-06:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Installing Kubernetes on Arc Linux Baremetal</title><link href="/coding/kubernetes/archlinux/2021/03/07/kubernetes-arch-linux.html" rel="alternate" type="text/html" title="Installing Kubernetes on Arc Linux Baremetal" /><published>2021-03-07T00:00:00-06:00</published><updated>2021-03-07T00:00:00-06:00</updated><id>/coding/kubernetes/archlinux/2021/03/07/kubernetes-arch-linux</id><content type="html" xml:base="/coding/kubernetes/archlinux/2021/03/07/kubernetes-arch-linux.html">&lt;p&gt;This is my personal guide / notes on installing Kubernetes Cluster on Arch Linux.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-03-13T15:34:25-06:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Setting up Docker Registry in Kubernetes</title><link href="/coding/docker/kubernetes/linux/2021/03/08/docker-registry.html" rel="alternate" type="text/html" title="Setting up Docker Registry in Kubernetes" /><published>2021-03-08T00:00:00-06:00</published><updated>2021-03-08T00:00:00-06:00</updated><id>/coding/docker/kubernetes/linux/2021/03/08/docker-registry</id><content type="html" xml:base="/coding/docker/kubernetes/linux/2021/03/08/docker-registry.html">&lt;p&gt;If you want to deploy custom docker images in your private kubernetes cluster, you’ll also want a private image repository.&lt;/p&gt;
+
+&lt;h2 id=&quot;create-a-persistent-volume-claim&quot;&gt;Create a persistent volume claim&lt;/h2&gt;
+&lt;p&gt;This is where your images will live. Here, I am using a dynamic nfs provisioner. More info found &lt;a href=&quot;/coding/kubernetes/2021/02/15/kubernetes-dynamic-nfs.html&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;PersistentVolumeClaim&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry-claim&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;storageClassName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;managed-nfs-storage&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;accessModes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ReadWriteMany&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;storage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;10Gi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-registry-deployment-configuration&quot;&gt;Create registry deployment configuration&lt;/h2&gt;
+&lt;p&gt;This is the actual registry server&lt;/p&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;apps/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Deployment&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry-deploy&lt;/span&gt; 
+  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker-registry&lt;/span&gt; 
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;replicas&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;matchLabels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker-registry&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker-registry&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry-volume&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;persistentVolumeClaim&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;claimName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry-claim&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry:2&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker-registry&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;imagePullPolicy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;IfNotPresent&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;containerPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5000&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;volumeMounts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry-volume&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;mountPath&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/var/lib/registry&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;expose-as-a-service&quot;&gt;Expose as a service&lt;/h2&gt;
+
+&lt;p&gt;You can choose to expose this as a NodePort and just use the generated port and node name. I wanted to take it a step further and expose it as a secured registry.&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Service&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker-registry&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry-service&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5000&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;TCP&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;targetPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5000&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker-registry&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ClusterIP&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-htpasswd-secret&quot;&gt;Create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;htpasswd&lt;/code&gt; Secret&lt;/h2&gt;
+
+&lt;p&gt;To secure your registry, basic authentication can be used by creating an htpasswd file. Install apache2-utils first if you don’t have it yet&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;apache2-utils
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Generate the htpasswd file.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;htpasswd &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; auth username password
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create a kubernetes secret&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create secret generic registry-auth &lt;span class=&quot;nt&quot;&gt;--from-file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;auth
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;certicate-generation&quot;&gt;Certicate Generation&lt;/h2&gt;
+
+&lt;p&gt;By default, docker clients require you to connect to a secure registry (https). You’ll be needing a certificate. I’ll be using Let’s Encrypt ACME. More information about that available &lt;a href=&quot;/coding/kubernetes/2021/02/15/kubernetes-dynamic-nfs.html&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cert-manager.io/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Certificate&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry-certificate&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;dnsNames&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry.myawesomesite.com&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;secretName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry-tls&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;issuerRef&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;letsencrypt&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ClusterIssuer&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;ingress&quot;&gt;Ingress&lt;/h2&gt;
+&lt;p&gt;Time to combine things together&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;networking.k8s.io/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Ingress&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry-ingress&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;annotations&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;nginx.ingress.kubernetes.io/rewrite-target&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;nginx.ingress.kubernetes.io/auth-type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;basic&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;nginx.ingress.kubernetes.io/auth-secret&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry-auth&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;nginx.ingress.kubernetes.io/auth-realm&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Authentication&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Required'&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;nginx.ingress.kubernetes.io/proxy-body-size&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;0&quot;&lt;/span&gt;    
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;tls&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry.myawesomesite.com&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;secretName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry-tls&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry.myawesomesite.com&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;pathType&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Prefix&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;backend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry-service&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5000&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;test&quot;&gt;Test&lt;/h2&gt;
+
+&lt;p&gt;If everything went well, you can easily test this by going directly to the api using a browser&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;https://registry.\&amp;lt;myawesomesite\&amp;gt;.com/v2/_catalog
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You should see an empty json object&lt;/p&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now to test if you can actually push private images into your registry. Try logging in to your registry&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker login
+Username: &amp;lt;myusername&amp;gt;
+Password:
+Login Succeeded
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After successful login, pull an image from dockerhub, tag it then push it to your repo&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker pull nginx
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker tag nginx:latest myregistryurl/nginx:1.19
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker push myregistryurl/nginx:1.19
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Go back to your browser and refresh the catalog and see if the image got pushed.&lt;/p&gt;</content><author><name></name></author><category term="coding" /><category term="docker" /><category term="kubernetes" /><category term="linux" /><summary type="html">If you want to deploy custom docker images in your private kubernetes cluster, you’ll also want a private image repository. Create a persistent volume claim This is where your images will live. Here, I am using a dynamic nfs provisioner. More info found here apiVersion: v1 kind: PersistentVolumeClaim metadata: name: registry-claim spec: storageClassName: managed-nfs-storage accessModes: - ReadWriteMany resources: requests: storage: 10Gi Create registry deployment configuration This is the actual registry server apiVersion: apps/v1 kind: Deployment metadata: name: registry-deploy labels: app: docker-registry spec: replicas: 1 selector: matchLabels: app: docker-registry template: metadata: labels: app: docker-registry spec: volumes: - name: registry-volume persistentVolumeClaim: claimName: registry-claim containers: - image: registry:2 name: docker-registry imagePullPolicy: IfNotPresent ports: - containerPort: 5000 volumeMounts: - name: registry-volume mountPath: /var/lib/registry Expose as a service You can choose to expose this as a NodePort and just use the generated port and node name. I wanted to take it a step further and expose it as a secured registry. apiVersion: v1 kind: Service metadata: labels: app: docker-registry name: registry-service spec: ports: - port: 5000 protocol: TCP targetPort: 5000 selector: app: docker-registry type: ClusterIP Create htpasswd Secret To secure your registry, basic authentication can be used by creating an htpasswd file. Install apache2-utils first if you don’t have it yet $ sudo apt install apache2-utils Generate the htpasswd file. $ htpasswd -c auth username password Create a kubernetes secret $ kubectl create secret generic registry-auth --from-file=auth Certicate Generation By default, docker clients require you to connect to a secure registry (https). You’ll be needing a certificate. I’ll be using Let’s Encrypt ACME. More information about that available here apiVersion: cert-manager.io/v1 kind: Certificate metadata: name: registry-certificate spec: dnsNames: - registry.myawesomesite.com secretName: registry-tls issuerRef: name: letsencrypt kind: ClusterIssuer Ingress Time to combine things together apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: registry-ingress annotations: nginx.ingress.kubernetes.io/rewrite-target: / nginx.ingress.kubernetes.io/auth-type: basic nginx.ingress.kubernetes.io/auth-secret: registry-auth nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required' nginx.ingress.kubernetes.io/proxy-body-size: &quot;0&quot; spec: tls: - hosts: - registry.myawesomesite.com secretName: registry-tls rules: - host: registry.myawesomesite.com http: paths: - path: &quot;/&quot; pathType: Prefix backend: service: name: registry-service port: number: 5000 Test If everything went well, you can easily test this by going directly to the api using a browser https://registry.\&amp;lt;myawesomesite\&amp;gt;.com/v2/_catalog You should see an empty json object {} Now to test if you can actually push private images into your registry. Try logging in to your registry $ docker login Username: &amp;lt;myusername&amp;gt; Password: Login Succeeded After successful login, pull an image from dockerhub, tag it then push it to your repo $ docker pull nginx $ docker tag nginx:latest myregistryurl/nginx:1.19 $ docker push myregistryurl/nginx:1.19 Go back to your browser and refresh the catalog and see if the image got pushed.</summary></entry><entry><title type="html">Installing Kubernetes on Arch Linux Baremetal</title><link href="/coding/kubernetes/archlinux/2021/03/07/kubernetes-arch-linux.html" rel="alternate" type="text/html" title="Installing Kubernetes on Arch Linux Baremetal" /><published>2021-03-07T00:00:00-06:00</published><updated>2021-03-07T00:00:00-06:00</updated><id>/coding/kubernetes/archlinux/2021/03/07/kubernetes-arch-linux</id><content type="html" xml:base="/coding/kubernetes/archlinux/2021/03/07/kubernetes-arch-linux.html">&lt;p&gt;This is my personal guide / notes on installing Kubernetes Cluster on Arch Linux.&lt;/p&gt;
 
 &lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
 &lt;ol&gt;
@@ -369,11 +532,4 @@ Created symlink /run/systemd/system/remote-fs.target.wants/rpc-statd.service →
   &lt;li&gt;Download the custom optifabric &lt;a href=&quot;https://ipfs.io/ipfs/QmP3nCfHzngKv73mt84FxgPjCchuNoMoYj6yYaZSGRseQr/optifabric-1.8.16.jar&quot;&gt;here&lt;/a&gt;. If you’re curious on what was changed, you can find the updated repository &lt;a href=&quot;https://github.com/ervinpm/OptiFabric&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
   &lt;li&gt;Add the custom jar to the loader mod.&lt;/li&gt;
   &lt;li&gt;And you’re done! Launch the game&lt;/li&gt;
-&lt;/ol&gt;</content><author><name></name></author><category term="minecraft" /><category term="optfine" /><summary type="html">I really wanted to install Optifine for Minecraft 1.16.5 and can’t wait for the official release. These are the steps to install: Create new instance with Minecraft Version 1.16.5 Install Fabric (Button locaated in the right hand side) Download Fabric API (Not sure if this is needed but I installed it anyway). You can find them here. In the loader mods, add the downloaded fabric api jar file. Download Optifine from here. Add it to the loader mods, the same as fabric api Download the custom optifabric here. If you’re curious on what was changed, you can find the updated repository here. Add the custom jar to the loader mod. And you’re done! Launch the game</summary></entry><entry><title type="html">Install MongoDB on Windows 10</title><link href="/coding/2021/01/10/install-mongodb.html" rel="alternate" type="text/html" title="Install MongoDB on Windows 10" /><published>2021-01-10T00:00:00-06:00</published><updated>2021-01-10T00:00:00-06:00</updated><id>/coding/2021/01/10/install-mongodb</id><content type="html" xml:base="/coding/2021/01/10/install-mongodb.html">&lt;p&gt;When developing apps on your local machine, you may want the portable mongodb server. You’ll need to do a few steps to run it:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Download the windows zip file from the Mongo DB &lt;a href=&quot;https://www.mongodb.com/try/download/community&quot;&gt;site&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Extract to an simple folder (i.e. C:\mongodb)&lt;/li&gt;
-  &lt;li&gt;Create a folder inside the binary folder named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data&lt;/code&gt; and under that folder create another one called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;db&lt;/code&gt;. It should have a path like this: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\mongodb\bin\data\db&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Change directory to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bin&lt;/code&gt; folder and run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./mongodb.exe  --dbpath ./data/db&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;</content><author><name></name></author><category term="coding" /><summary type="html">When developing apps on your local machine, you may want the portable mongodb server. You’ll need to do a few steps to run it: Download the windows zip file from the Mongo DB site Extract to an simple folder (i.e. C:\mongodb) Create a folder inside the binary folder named data and under that folder create another one called db. It should have a path like this: C:\mongodb\bin\data\db Change directory to the bin folder and run ./mongodb.exe --dbpath ./data/db</summary></entry></feed>
+&lt;/ol&gt;</content><author><name></name></author><category term="minecraft" /><category term="optfine" /><summary type="html">I really wanted to install Optifine for Minecraft 1.16.5 and can’t wait for the official release. These are the steps to install: Create new instance with Minecraft Version 1.16.5 Install Fabric (Button locaated in the right hand side) Download Fabric API (Not sure if this is needed but I installed it anyway). You can find them here. In the loader mods, add the downloaded fabric api jar file. Download Optifine from here. Add it to the loader mods, the same as fabric api Download the custom optifabric here. If you’re curious on what was changed, you can find the updated repository here. Add the custom jar to the loader mod. And you’re done! Launch the game</summary></entry></feed>
