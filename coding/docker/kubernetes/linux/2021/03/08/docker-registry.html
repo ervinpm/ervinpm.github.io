@@ -1,31 +1,17 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="en"><head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-=======
-<html lang="en"><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com">
->>>>>>> 6877080e9a2ede20fa41503aac206b9712b2e946
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"><!-- Begin Jekyll SEO tag v2.7.1 -->
 <title>Setting up Docker Registry in Kubernetes | $ ervinpm</title>
 <meta name="generator" content="Jekyll v4.2.0" />
 <meta property="og:title" content="Setting up Docker Registry in Kubernetes" />
 <meta property="og:locale" content="en_US" />
-<<<<<<< HEAD
 <meta name="description" content="If you want to deploy custom docker images in your private kubernetes cluster, you’ll also want a private image repository." />
 <meta property="og:description" content="If you want to deploy custom docker images in your private kubernetes cluster, you’ll also want a private image repository." />
-=======
-<meta name="description" content="If you want to deploy custom docker images in your private kubernetes cluster, you’ll also want a private image repository. Create a persistent volume claim This is where your images will live. Here, I am using a dynamic nfs provisioner. More info found here apiVersion: v1 kind: PersistentVolumeClaim metadata: name: registry-claim spec: storageClassName: managed-nfs-storage accessModes: - ReadWriteMany resources: requests: storage: 10Gi Create registry deployment configuration This is the actual registry server apiVersion: apps/v1 kind: Deployment metadata: name: registry-deploy labels: app: docker-registry spec: replicas: 1 selector: matchLabels: app: docker-registry template: metadata: labels: app: docker-registry spec: volumes: - name: registry-volume persistentVolumeClaim: claimName: registry-claim containers: - image: registry:2 name: docker-registry imagePullPolicy: IfNotPresent ports: - containerPort: 5000 volumeMounts: - name: registry-volume mountPath: /var/lib/registry Expose as a service You can choose to expose this as a NodePort and just use the generated port and node name. I wanted to take it a step further and expose it as a secured registry. apiVersion: v1 kind: Service metadata: labels: app: docker-registry name: registry-service spec: ports: - port: 5000 protocol: TCP targetPort: 5000 selector: app: docker-registry type: ClusterIP Create htpasswd Secret To secure your registry, basic authentication can be used by creating an htpasswd file. Install apache2-utils first if you don’t have it yet $ sudo apt install apache2-utils Generate the htpasswd file. $ htpasswd -c auth username password Create a kubernetes secret $ kubectl create secret generic registry-auth --from-file=auth Certicate Generation By default, docker clients require you to connect to a secure registry (https). You’ll be needing a certificate. I’ll be using Let’s Encrypt ACME. More information about that available here apiVersion: cert-manager.io/v1 kind: Certificate metadata: name: registry-certificate spec: dnsNames: - registry.myawesomesite.com secretName: registry-tls issuerRef: name: letsencrypt kind: ClusterIssuer Ingress Time to combine things together apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: registry-ingress annotations: nginx.ingress.kubernetes.io/rewrite-target: / nginx.ingress.kubernetes.io/auth-type: basic nginx.ingress.kubernetes.io/auth-secret: registry-auth nginx.ingress.kubernetes.io/auth-realm: &#39;Authentication Required&#39; nginx.ingress.kubernetes.io/proxy-body-size: &quot;0&quot; spec: tls: - hosts: - registry.myawesomesite.com secretName: registry-tls rules: - host: registry.myawesomesite.com http: paths: - path: &quot;/&quot; pathType: Prefix backend: service: name: registry-service port: number: 5000 Test If everything went well, you can easily test this by going directly to the api using a browser https://registry.\&lt;myawesomesite\&gt;.com/v2/_catalog You should see an empty json object {} Now to test if you can actually push private images into your registry. Try logging in to your registry $ docker login Username: &lt;myusername&gt; Password: Login Succeeded After successful login, pull an image from dockerhub, tag it then push it to your repo $ docker pull nginx $ docker tag nginx:latest myregistryurl/nginx:1.19 $ docker push myregistryurl/nginx:1.19 Go back to your browser and refresh the catalog and see if the image got pushed." />
-<meta property="og:description" content="If you want to deploy custom docker images in your private kubernetes cluster, you’ll also want a private image repository. Create a persistent volume claim This is where your images will live. Here, I am using a dynamic nfs provisioner. More info found here apiVersion: v1 kind: PersistentVolumeClaim metadata: name: registry-claim spec: storageClassName: managed-nfs-storage accessModes: - ReadWriteMany resources: requests: storage: 10Gi Create registry deployment configuration This is the actual registry server apiVersion: apps/v1 kind: Deployment metadata: name: registry-deploy labels: app: docker-registry spec: replicas: 1 selector: matchLabels: app: docker-registry template: metadata: labels: app: docker-registry spec: volumes: - name: registry-volume persistentVolumeClaim: claimName: registry-claim containers: - image: registry:2 name: docker-registry imagePullPolicy: IfNotPresent ports: - containerPort: 5000 volumeMounts: - name: registry-volume mountPath: /var/lib/registry Expose as a service You can choose to expose this as a NodePort and just use the generated port and node name. I wanted to take it a step further and expose it as a secured registry. apiVersion: v1 kind: Service metadata: labels: app: docker-registry name: registry-service spec: ports: - port: 5000 protocol: TCP targetPort: 5000 selector: app: docker-registry type: ClusterIP Create htpasswd Secret To secure your registry, basic authentication can be used by creating an htpasswd file. Install apache2-utils first if you don’t have it yet $ sudo apt install apache2-utils Generate the htpasswd file. $ htpasswd -c auth username password Create a kubernetes secret $ kubectl create secret generic registry-auth --from-file=auth Certicate Generation By default, docker clients require you to connect to a secure registry (https). You’ll be needing a certificate. I’ll be using Let’s Encrypt ACME. More information about that available here apiVersion: cert-manager.io/v1 kind: Certificate metadata: name: registry-certificate spec: dnsNames: - registry.myawesomesite.com secretName: registry-tls issuerRef: name: letsencrypt kind: ClusterIssuer Ingress Time to combine things together apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: registry-ingress annotations: nginx.ingress.kubernetes.io/rewrite-target: / nginx.ingress.kubernetes.io/auth-type: basic nginx.ingress.kubernetes.io/auth-secret: registry-auth nginx.ingress.kubernetes.io/auth-realm: &#39;Authentication Required&#39; nginx.ingress.kubernetes.io/proxy-body-size: &quot;0&quot; spec: tls: - hosts: - registry.myawesomesite.com secretName: registry-tls rules: - host: registry.myawesomesite.com http: paths: - path: &quot;/&quot; pathType: Prefix backend: service: name: registry-service port: number: 5000 Test If everything went well, you can easily test this by going directly to the api using a browser https://registry.\&lt;myawesomesite\&gt;.com/v2/_catalog You should see an empty json object {} Now to test if you can actually push private images into your registry. Try logging in to your registry $ docker login Username: &lt;myusername&gt; Password: Login Succeeded After successful login, pull an image from dockerhub, tag it then push it to your repo $ docker pull nginx $ docker tag nginx:latest myregistryurl/nginx:1.19 $ docker push myregistryurl/nginx:1.19 Go back to your browser and refresh the catalog and see if the image got pushed." />
->>>>>>> 6877080e9a2ede20fa41503aac206b9712b2e946
 <link rel="canonical" href="/coding/docker/kubernetes/linux/2021/03/08/docker-registry.html" />
 <meta property="og:url" content="/coding/docker/kubernetes/linux/2021/03/08/docker-registry.html" />
 <meta property="og:site_name" content="$ ervinpm" />
@@ -34,15 +20,9 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Setting up Docker Registry in Kubernetes" />
 <script type="application/ld+json">
-<<<<<<< HEAD
 {"@type":"BlogPosting","headline":"Setting up Docker Registry in Kubernetes","dateModified":"2021-03-08T00:00:00-06:00","datePublished":"2021-03-08T00:00:00-06:00","description":"If you want to deploy custom docker images in your private kubernetes cluster, you’ll also want a private image repository.","mainEntityOfPage":{"@type":"WebPage","@id":"/coding/docker/kubernetes/linux/2021/03/08/docker-registry.html"},"url":"/coding/docker/kubernetes/linux/2021/03/08/docker-registry.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="$ ervinpm" /></head>
-=======
-{"@type":"BlogPosting","url":"/coding/docker/kubernetes/linux/2021/03/08/docker-registry.html","headline":"Setting up Docker Registry in Kubernetes","dateModified":"2021-03-08T00:00:00-06:00","datePublished":"2021-03-08T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"/coding/docker/kubernetes/linux/2021/03/08/docker-registry.html"},"description":"If you want to deploy custom docker images in your private kubernetes cluster, you’ll also want a private image repository. Create a persistent volume claim This is where your images will live. Here, I am using a dynamic nfs provisioner. More info found here apiVersion: v1 kind: PersistentVolumeClaim metadata: name: registry-claim spec: storageClassName: managed-nfs-storage accessModes: - ReadWriteMany resources: requests: storage: 10Gi Create registry deployment configuration This is the actual registry server apiVersion: apps/v1 kind: Deployment metadata: name: registry-deploy labels: app: docker-registry spec: replicas: 1 selector: matchLabels: app: docker-registry template: metadata: labels: app: docker-registry spec: volumes: - name: registry-volume persistentVolumeClaim: claimName: registry-claim containers: - image: registry:2 name: docker-registry imagePullPolicy: IfNotPresent ports: - containerPort: 5000 volumeMounts: - name: registry-volume mountPath: /var/lib/registry Expose as a service You can choose to expose this as a NodePort and just use the generated port and node name. I wanted to take it a step further and expose it as a secured registry. apiVersion: v1 kind: Service metadata: labels: app: docker-registry name: registry-service spec: ports: - port: 5000 protocol: TCP targetPort: 5000 selector: app: docker-registry type: ClusterIP Create htpasswd Secret To secure your registry, basic authentication can be used by creating an htpasswd file. Install apache2-utils first if you don’t have it yet $ sudo apt install apache2-utils Generate the htpasswd file. $ htpasswd -c auth username password Create a kubernetes secret $ kubectl create secret generic registry-auth --from-file=auth Certicate Generation By default, docker clients require you to connect to a secure registry (https). You’ll be needing a certificate. I’ll be using Let’s Encrypt ACME. More information about that available here apiVersion: cert-manager.io/v1 kind: Certificate metadata: name: registry-certificate spec: dnsNames: - registry.myawesomesite.com secretName: registry-tls issuerRef: name: letsencrypt kind: ClusterIssuer Ingress Time to combine things together apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: registry-ingress annotations: nginx.ingress.kubernetes.io/rewrite-target: / nginx.ingress.kubernetes.io/auth-type: basic nginx.ingress.kubernetes.io/auth-secret: registry-auth nginx.ingress.kubernetes.io/auth-realm: &#39;Authentication Required&#39; nginx.ingress.kubernetes.io/proxy-body-size: &quot;0&quot; spec: tls: - hosts: - registry.myawesomesite.com secretName: registry-tls rules: - host: registry.myawesomesite.com http: paths: - path: &quot;/&quot; pathType: Prefix backend: service: name: registry-service port: number: 5000 Test If everything went well, you can easily test this by going directly to the api using a browser https://registry.\\&lt;myawesomesite\\&gt;.com/v2/_catalog You should see an empty json object {} Now to test if you can actually push private images into your registry. Try logging in to your registry $ docker login Username: &lt;myusername&gt; Password: Login Succeeded After successful login, pull an image from dockerhub, tag it then push it to your repo $ docker pull nginx $ docker tag nginx:latest myregistryurl/nginx:1.19 $ docker push myregistryurl/nginx:1.19 Go back to your browser and refresh the catalog and see if the image got pushed.","@context":"https://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="$ ervinpm" /></head>
->>>>>>> 6877080e9a2ede20fa41503aac206b9712b2e946
   <body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="/">$ ervinpm</a><nav class="site-nav">
@@ -235,7 +215,6 @@ Login Succeeded
 
 <p>Go back to your browser and refresh the catalog and see if the image got pushed.</p>
 
-<<<<<<< HEAD
 <h2 id="using-this-in-kubernetes">Using this in kubernetes</h2>
 
 <p>Create registry credential secret</p>
@@ -250,13 +229,10 @@ Login Succeeded
   <span class="nt">-n</span> &lt;your-namespace&gt;
 </code></pre></div></div>
 
-=======
->>>>>>> 6877080e9a2ede20fa41503aac206b9712b2e946
   </div><a class="u-url" href="/coding/docker/kubernetes/linux/2021/03/08/docker-registry.html" hidden></a>
 </article>
 
       </div>
-<<<<<<< HEAD
     </main><footer class="site-footer h-card">
     <data class="u-url" href="/"></data>
   
@@ -283,34 +259,6 @@ Login Succeeded
     </div>
   
   </footer>
-=======
-    </main><footer class="site-footer h-card">
-    <data class="u-url" href="/"></data>
-  
-    <div class="wrapper">
-  
-      <h2 class="footer-heading">$ ervinpm</h2>
-      
-      <a href="https://www.buymeacoffee.com/ervinpm"><img style="width: 160px;" src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=ervinpm&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"></a>
-
-      <div class="footer-col-wrapper">
-        <div class="footer-col footer-col-1">
-          <ul class="contact-list">
-            <li class="p-name">$ ervinpm</li><li><a class="u-email" href="mailto:me@ervinpm.com">me@ervinpm.com</a></li></ul>
-        </div>
-  
-        <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/ervinpm"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">ervinpm</span></a></li><li><a href="https://www.twitter.com/ervipm"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">ervipm</span></a></li></ul>
-</div>
-  
-        <div class="footer-col footer-col-3">
-          <p>Still working on it</p>
-        </div>
-      </div>
-  
-    </div>
-  
-  </footer>
->>>>>>> 6877080e9a2ede20fa41503aac206b9712b2e946
 </body>
 
 </html>
