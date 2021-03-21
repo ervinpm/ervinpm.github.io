@@ -1,4 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-03-21T08:13:23-05:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Deploy Angular App to Kubernetes</title><link href="/coding/docker/angular/linux/nginx/2021/03/19/dockerize-angular.html" rel="alternate" type="text/html" title="Deploy Angular App to Kubernetes" /><published>2021-03-19T01:00:00-05:00</published><updated>2021-03-19T01:00:00-05:00</updated><id>/coding/docker/angular/linux/nginx/2021/03/19/dockerize-angular</id><content type="html" xml:base="/coding/docker/angular/linux/nginx/2021/03/19/dockerize-angular.html">&lt;p&gt;To deploy an angular app to kubernetes, you’ll have to containerize you application. In this example, I am going to use docker.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-03-21T08:41:24-05:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Setting up Bind DNS Server in Kubernetes</title><link href="/coding/docker/linux/kubernetes/dns/2021/03/21/dockerize-angular-copy.html" rel="alternate" type="text/html" title="Setting up Bind DNS Server in Kubernetes" /><published>2021-03-21T01:00:00-05:00</published><updated>2021-03-21T01:00:00-05:00</updated><id>/coding/docker/linux/kubernetes/dns/2021/03/21/dockerize-angular%20copy</id><content type="html" xml:base="/coding/docker/linux/kubernetes/dns/2021/03/21/dockerize-angular-copy.html">&lt;p&gt;If you are tired of typing ip addresses to access your home computers, you’ll need a private DNS server so you can just adress them as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;myservername&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this example, I will be using a kubernetes cluster that I already have setup. This also allows you to use it as a DNS forwarder&lt;/p&gt;
+
+&lt;h2 id=&quot;deplyment-configuration&quot;&gt;Deplyment configuration&lt;/h2&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;apps/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Deployment&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind-deployment&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;replicas&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;matchLabels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cytopia/bind&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ALLOW_QUERY&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;192.168.1.0/24,127.0.0.1,localnets&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;EXTRA_HOSTS&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myserver01=192.168.1.101,myserver02=192.168.1.102,myserver03=192.168.1.103,myserver04=192.168.1.104&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DNS_FORWARDER&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;8.8.8.8&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ALLOW_RECURSION&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;192.168.1.0/24,127.0.0.1,localnets&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;containerPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;53&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;service-configuration&quot;&gt;Service Configuration&lt;/h2&gt;
+
+&lt;p&gt;I used &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MetalLB&lt;/code&gt; for load balancing configuration. This will allow you to point a router or a computer to the DNS server with default port (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;53&lt;/code&gt;).&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Service&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind-service&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;LoadBalancer&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;53&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;targetPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;53&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;UDP&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;router-configuration&quot;&gt;Router Configuration&lt;/h2&gt;
+
+&lt;p&gt;For this to work, you either setup each of your computers or the router. By default, the router will use DNS of your Internet Service Provider (ISP). I changed this to point to the IP assigned by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MetalLB&lt;/code&gt; for the DNS server.&lt;/p&gt;</content><author><name></name></author><category term="coding" /><category term="docker" /><category term="linux" /><category term="kubernetes" /><category term="dns" /><summary type="html">If you are tired of typing ip addresses to access your home computers, you’ll need a private DNS server so you can just adress them as myservername.</summary></entry><entry><title type="html">Deploy Angular App to Kubernetes</title><link href="/coding/docker/angular/linux/nginx/2021/03/19/dns-server.html" rel="alternate" type="text/html" title="Deploy Angular App to Kubernetes" /><published>2021-03-19T01:00:00-05:00</published><updated>2021-03-19T01:00:00-05:00</updated><id>/coding/docker/angular/linux/nginx/2021/03/19/dns-server</id><content type="html" xml:base="/coding/docker/angular/linux/nginx/2021/03/19/dns-server.html">&lt;p&gt;To deploy an angular app to kubernetes, you’ll have to containerize you application. In this example, I am going to use docker.&lt;/p&gt;
 
 &lt;h2 id=&quot;create-a-docker-file&quot;&gt;Create a docker file&lt;/h2&gt;
 
@@ -597,66 +656,4 @@ Created symlink /run/systemd/system/remote-fs.target.wants/rpc-statd.service →
     &lt;div class=&quot;language-scss highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@import&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;../node_modules/bootstrap/scss/bootstrap&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
-&lt;/ol&gt;</content><author><name></name></author><category term="coding" /><category term="angular" /><summary type="html">To integrate bootsrap into your angular installation, you just need to intall the npm package and include the built files in the configuration</summary></entry><entry><title type="html">No Internet in Kubernetes Pods</title><link href="/kubernetes/archlinux/2021/01/30/kubernetes-internet.html" rel="alternate" type="text/html" title="No Internet in Kubernetes Pods" /><published>2021-01-30T00:00:00-06:00</published><updated>2021-01-30T00:00:00-06:00</updated><id>/kubernetes/archlinux/2021/01/30/kubernetes-internet</id><content type="html" xml:base="/kubernetes/archlinux/2021/01/30/kubernetes-internet.html">&lt;p&gt;After the painful setup of kubernetes in arch linux, the applications deployed in the pods are unable to access the internet and also talk to each other. I found this out when I installed Jenkins and was getting &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UnknownHostException&lt;/code&gt; errors and also unable to install plugins. There is an additional configuration that needs to be done in the flannel daemon.&lt;/p&gt;
-
-&lt;h3 id=&quot;testing-if-pods-have-internet&quot;&gt;Testing if pods have Internet&lt;/h3&gt;
-
-&lt;p&gt;For you to test if your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt; instance has internet you can &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh&lt;/code&gt; into it by using this command:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; jenkins-pod-name &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; jenkins &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; /bin/bash
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ping google.com
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;testing-if-pods-can-talk-to-each-other&quot;&gt;Testing if pods can talk to each other&lt;/h3&gt;
-
-&lt;p&gt;To test if your pods can talk to each other, you can run a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;busy-box&lt;/code&gt; instance and do a ping there. Just make sure that they are on the same namespace. In my case the namespace is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jenkins&lt;/code&gt; Here is the command:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl run &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--tty&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; debug &lt;span class=&quot;nt&quot;&gt;--image&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;busybox &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; jenkins &lt;span class=&quot;nt&quot;&gt;--restart&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Never &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;updating-flannel-daemon&quot;&gt;Updating Flannel Daemon&lt;/h3&gt;
-
-&lt;p&gt;Apparently these problems are all caused by Flannel not using the correct &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;iface&lt;/code&gt;. A noob like me still does not know what that means. Nonetheless here is what I did.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Get the network interface name of your network. Mine is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eno1&lt;/code&gt;:
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ip &lt;span class=&quot;nt&quot;&gt;-4&lt;/span&gt; addr show
-1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
- inet 127.0.0.1/8 scope host lo
-    valid_lft forever preferred_lft forever
-2: eno1: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
- altname enp0s25
- inet 192.168.1.14/24 brd 192.168.1.255 scope global dynamic noprefixroute eno1
-    valid_lft 82467sec preferred_lft 71667sec
-3: flannel.1: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1450 qdisc noqueue state UNKNOWN group default
- inet 10.244.0.0/32 brd 10.244.0.0 scope global flannel.1
-    valid_lft forever preferred_lft forever
-4: cni0: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1450 qdisc noqueue state UP group default qlen 1000
- inet 10.244.0.1/24 brd 10.244.0.255 scope global cni0
-    valid_lft forever preferred_lft forever
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Update the flannel daemon configuration. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;KUBE_EDITOR=vim&lt;/code&gt; is optional, I just did not like the default &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vi&lt;/code&gt; editor.
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ KUBE_EDITOR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vim kubectl edit DaemonSet kube-flannel-ds &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; kube-system
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Set the value to the name of the network interface you got in step 1. Here is how mine looks like.&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;      &lt;span class=&quot;na&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;--ip-masq&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;--kube-subnet-mgr&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;--iface=eno1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;That’s it!&lt;/strong&gt; these two steps solved this problem.&lt;/p&gt;
-
-&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
-
-&lt;p&gt;https://medium.com/@anilkreddyr/kubernetes-with-flannel-understanding-the-networking-part-1-7e1fe51820e4&lt;/p&gt;
-
-&lt;p&gt;https://www.mankier.com/1/kubectl-edit&lt;/p&gt;
-
-&lt;p&gt;https://www.jeffgeerling.com/blog/2019/debugging-networking-issues-multi-node-kubernetes-on-virtualbox&lt;/p&gt;</content><author><name></name></author><category term="kubernetes" /><category term="archlinux" /><summary type="html">After the painful setup of kubernetes in arch linux, the applications deployed in the pods are unable to access the internet and also talk to each other. I found this out when I installed Jenkins and was getting UnknownHostException errors and also unable to install plugins. There is an additional configuration that needs to be done in the flannel daemon.</summary></entry></feed>
+&lt;/ol&gt;</content><author><name></name></author><category term="coding" /><category term="angular" /><summary type="html">To integrate bootsrap into your angular installation, you just need to intall the npm package and include the built files in the configuration</summary></entry></feed>
