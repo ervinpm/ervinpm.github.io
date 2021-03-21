@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Bootstrap in Angular" />
 <script type="application/ld+json">
-{"headline":"Bootstrap in Angular","dateModified":"2021-01-31T00:00:00-06:00","datePublished":"2021-01-31T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/coding/angular/2021/01/31/angular-bootstrap.html"},"description":"To integrate bootsrap into your angular installation, you just need to intall the npm package and include the built files in the configuration","url":"/coding/angular/2021/01/31/angular-bootstrap.html","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","headline":"Bootstrap in Angular","dateModified":"2021-01-31T00:00:00-06:00","datePublished":"2021-01-31T00:00:00-06:00","description":"To integrate bootsrap into your angular installation, you just need to intall the npm package and include the built files in the configuration","mainEntityOfPage":{"@type":"WebPage","@id":"/coding/angular/2021/01/31/angular-bootstrap.html"},"url":"/coding/angular/2021/01/31/angular-bootstrap.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="$ ervinpm" /></head>
   <body><header class="site-header" role="banner">
@@ -53,30 +53,24 @@
     <p>To integrate bootsrap into your angular installation, you just need to intall the npm package and include the built files in the configuration</p>
 
 <ol>
-  <li>Install Bootstrap and JQuery. At the time of writing, jquery is a dependency of bootstrap.</li>
-</ol>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm <span class="nb">install</span> <span class="nt">--save</span> bootstrap jquery
-</code></pre></div></div>
-
-<ol>
-  <li>Update <code class="language-plaintext highlighter-rouge">angular.json</code> to include the built files.</li>
-</ol>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"architect"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  <li>Install Bootstrap and JQuery. At the time of writing, jquery is a dependency of bootstrap.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm <span class="nb">install</span> <span class="nt">--save</span> bootstrap jquery
+</code></pre></div>    </div>
+  </li>
+  <li>Update <code class="language-plaintext highlighter-rouge">angular.json</code> to include the built files.
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"architect"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
   </span><span class="nl">"build"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w"> 
-    </span><span class="nl">"styles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"src/styles.css"</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"node_modules/jquery/dist/jquery.min.js"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"node_modules/bootstrap/dist/js/bootstrap.min.js"</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-</span></code></pre></div></div>
-
-<ol>
+ </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w"> 
+ </span><span class="nl">"styles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+     </span><span class="s2">"src/styles.css"</span><span class="w">
+   </span><span class="p">],</span><span class="w">
+   </span><span class="nl">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+     </span><span class="s2">"node_modules/jquery/dist/jquery.min.js"</span><span class="p">,</span><span class="w">
+     </span><span class="s2">"node_modules/bootstrap/dist/js/bootstrap.min.js"</span><span class="w">
+   </span><span class="p">]</span><span class="w">
+ </span><span class="p">},</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
   <li>import <code class="language-plaintext highlighter-rouge">css</code> to <code class="language-plaintext highlighter-rouge">styles.scss</code> so that you can override the styles that fit your app.
     <div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@import</span> <span class="s2">"../node_modules/bootstrap/scss/bootstrap"</span><span class="p">;</span>
 </code></pre></div>    </div>

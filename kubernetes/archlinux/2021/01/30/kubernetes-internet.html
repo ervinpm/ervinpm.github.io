@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="No Internet in Kubernetes Pods" />
 <script type="application/ld+json">
-{"headline":"No Internet in Kubernetes Pods","dateModified":"2021-01-30T00:00:00-06:00","datePublished":"2021-01-30T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/kubernetes/archlinux/2021/01/30/kubernetes-internet.html"},"description":"After the painful setup of kubernetes in arch linux, the applications deployed in the pods are unable to access the internet and also talk to each other. I found this out when I installed Jenkins and was getting UnknownHostException errors and also unable to install plugins. There is an additional configuration that needs to be done in the flannel daemon.","url":"/kubernetes/archlinux/2021/01/30/kubernetes-internet.html","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","headline":"No Internet in Kubernetes Pods","dateModified":"2021-01-30T00:00:00-06:00","datePublished":"2021-01-30T00:00:00-06:00","description":"After the painful setup of kubernetes in arch linux, the applications deployed in the pods are unable to access the internet and also talk to each other. I found this out when I installed Jenkins and was getting UnknownHostException errors and also unable to install plugins. There is an additional configuration that needs to be done in the flannel daemon.","mainEntityOfPage":{"@type":"WebPage","@id":"/kubernetes/archlinux/2021/01/30/kubernetes-internet.html"},"url":"/kubernetes/archlinux/2021/01/30/kubernetes-internet.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="$ ervinpm" /></head>
   <body><header class="site-header" role="banner">
@@ -72,32 +72,28 @@
 <p>Apparently these problems are all caused by Flannel not using the correct <code class="language-plaintext highlighter-rouge">iface</code>. A noob like me still does not know what that means. Nonetheless here is what I did.</p>
 
 <ol>
-  <li>Get the network interface name of your network. Mine is <code class="language-plaintext highlighter-rouge">eno1</code>:</li>
-</ol>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ip <span class="nt">-4</span> addr show
+  <li>Get the network interface name of your network. Mine is <code class="language-plaintext highlighter-rouge">eno1</code>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ip <span class="nt">-4</span> addr show
 1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
+ inet 127.0.0.1/8 scope host lo
+    valid_lft forever preferred_lft forever
 2: eno1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    altname enp0s25
-    inet 192.168.1.14/24 brd 192.168.1.255 scope global dynamic noprefixroute eno1
-       valid_lft 82467sec preferred_lft 71667sec
+ altname enp0s25
+ inet 192.168.1.14/24 brd 192.168.1.255 scope global dynamic noprefixroute eno1
+    valid_lft 82467sec preferred_lft 71667sec
 3: flannel.1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc noqueue state UNKNOWN group default
-    inet 10.244.0.0/32 brd 10.244.0.0 scope global flannel.1
-       valid_lft forever preferred_lft forever
+ inet 10.244.0.0/32 brd 10.244.0.0 scope global flannel.1
+    valid_lft forever preferred_lft forever
 4: cni0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc noqueue state UP group default qlen 1000
-    inet 10.244.0.1/24 brd 10.244.0.255 scope global cni0
-       valid_lft forever preferred_lft forever
-
-</code></pre></div></div>
-
-<ol>
-  <li>Update the flannel daemon configuration. The <code class="language-plaintext highlighter-rouge">KUBE_EDITOR=vim</code> is optional, I just did not like the default <code class="language-plaintext highlighter-rouge">vi</code> editor.</li>
+ inet 10.244.0.1/24 brd 10.244.0.255 scope global cni0
+    valid_lft forever preferred_lft forever
+</code></pre></div>    </div>
+  </li>
+  <li>Update the flannel daemon configuration. The <code class="language-plaintext highlighter-rouge">KUBE_EDITOR=vim</code> is optional, I just did not like the default <code class="language-plaintext highlighter-rouge">vi</code> editor.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ KUBE_EDITOR</span><span class="o">=</span>vim kubectl edit DaemonSet kube-flannel-ds <span class="nt">-n</span> kube-system
+</code></pre></div>    </div>
+  </li>
 </ol>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ KUBE_EDITOR</span><span class="o">=</span>vim kubectl edit DaemonSet kube-flannel-ds <span class="nt">-n</span> kube-system
-</code></pre></div></div>
 
 <p>Set the value to the name of the network interface you got in step 1. Here is how mine looks like.</p>
 
@@ -110,13 +106,13 @@
 
 <p><strong>That’s it!</strong> these two steps solved this problem.</p>
 
-<p>Some references:</p>
+<h3 id="references">References</h3>
 
-<ul>
-  <li>https://medium.com/@anilkreddyr/kubernetes-with-flannel-understanding-the-networking-part-1-7e1fe51820e4</li>
-  <li>https://www.mankier.com/1/kubectl-edit</li>
-  <li>https://www.jeffgeerling.com/blog/2019/debugging-networking-issues-multi-node-kubernetes-on-virtualbox</li>
-</ul>
+<p>https://medium.com/@anilkreddyr/kubernetes-with-flannel-understanding-the-networking-part-1-7e1fe51820e4</p>
+
+<p>https://www.mankier.com/1/kubectl-edit</p>
+
+<p>https://www.jeffgeerling.com/blog/2019/debugging-networking-issues-multi-node-kubernetes-on-virtualbox</p>
 
   </div><a class="u-url" href="/kubernetes/archlinux/2021/01/30/kubernetes-internet.html" hidden></a>
 </article>

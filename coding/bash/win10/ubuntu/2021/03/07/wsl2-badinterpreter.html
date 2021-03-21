@@ -6,21 +6,21 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"><!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Install Jekyll on Windows 10 | $ ervinpm</title>
+<title>Bad Interpreter in WSL2 | $ ervinpm</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="Install Jekyll on Windows 10" />
+<meta property="og:title" content="Bad Interpreter in WSL2" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Still working on it" />
-<meta property="og:description" content="Still working on it" />
-<link rel="canonical" href="/coding/2021/01/03/settingup-jekyll.html" />
-<meta property="og:url" content="/coding/2021/01/03/settingup-jekyll.html" />
+<meta name="description" content="Bad Interpreter in WSL2" />
+<meta property="og:description" content="Bad Interpreter in WSL2" />
+<link rel="canonical" href="/coding/bash/win10/ubuntu/2021/03/07/wsl2-badinterpreter.html" />
+<meta property="og:url" content="/coding/bash/win10/ubuntu/2021/03/07/wsl2-badinterpreter.html" />
 <meta property="og:site_name" content="$ ervinpm" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-01-03T00:00:00-06:00" />
+<meta property="article:published_time" content="2021-03-07T00:00:00-06:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Install Jekyll on Windows 10" />
+<meta property="twitter:title" content="Bad Interpreter in WSL2" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","headline":"Install Jekyll on Windows 10","dateModified":"2021-01-03T00:00:00-06:00","datePublished":"2021-01-03T00:00:00-06:00","description":"Still working on it","mainEntityOfPage":{"@type":"WebPage","@id":"/coding/2021/01/03/settingup-jekyll.html"},"url":"/coding/2021/01/03/settingup-jekyll.html","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","headline":"Bad Interpreter in WSL2","dateModified":"2021-03-07T00:00:00-06:00","datePublished":"2021-03-07T00:00:00-06:00","description":"Bad Interpreter in WSL2","mainEntityOfPage":{"@type":"WebPage","@id":"/coding/bash/win10/ubuntu/2021/03/07/wsl2-badinterpreter.html"},"url":"/coding/bash/win10/ubuntu/2021/03/07/wsl2-badinterpreter.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="$ ervinpm" /></head>
   <body><header class="site-header" role="banner">
@@ -43,27 +43,32 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Install Jekyll on Windows 10</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Bad Interpreter in WSL2</h1>
     <p class="post-meta">
-      <time class="dt-published" datetime="2021-01-03T00:00:00-06:00" itemprop="datePublished">Jan 3, 2021
+      <time class="dt-published" datetime="2021-03-07T00:00:00-06:00" itemprop="datePublished">Mar 7, 2021
       </time></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p><img src="/assets/jekyll-banner.png" alt="JekyllIcon" /></p>
+    <h1 id="bad-interpreter-in-wsl2">Bad Interpreter in WSL2</h1>
+
+<p>While using WSL2 to manage my jekyll posts, i ran into a problem where in the jekyll commands were getting a <code class="language-plaintext highlighter-rouge">bad interpreter: No such file or directory</code> error. After some research, the problem was because it was conflicting with a jekyll path installed on my win10 machine. Fixing this was fairly easy to do:</p>
 
 <ol>
-  <li>Not needed but installing a terminal emulator helps a lot like <code class="language-plaintext highlighter-rouge">cmder</code>. Installer can be found <a href="https://cmder.net/">here</a>.</li>
-  <li>Also helps to get a good text editor like <a href="https://code.visualstudio.com/">vscode</a>.</li>
-  <li>Install <a href="https://rubyinstaller.org/downloads/">Ruby</a>. Make sure to install the one that includes DevKit.</li>
-  <li>Install Jekyll by executing this command:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gem <span class="nb">install </span>jekyll bundler
+  <li>Create or update the <code class="language-plaintext highlighter-rouge">wsl.conf</code>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>vim /etc/wsl.conf
 </code></pre></div>    </div>
   </li>
-  <li>At the time of writing, Ruby 3.0 does not include by default a dependency of Jekyll called <code class="language-plaintext highlighter-rouge">webrick</code>. In the generetaed jekyll site directory, execute the following command: <code class="language-plaintext highlighter-rouge">bundle add webrick</code>.</li>
+  <li>Add the following lines
+    <div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">interop</span>]
+<span class="n">appendWindowsPath</span> = <span class="n">false</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Save and exit <code class="language-plaintext highlighter-rouge">:x</code></li>
+  <li>Restart Ubuntu or your terminal</li>
 </ol>
 
-  </div><a class="u-url" href="/coding/2021/01/03/settingup-jekyll.html" hidden></a>
+  </div><a class="u-url" href="/coding/bash/win10/ubuntu/2021/03/07/wsl2-badinterpreter.html" hidden></a>
 </article>
 
       </div>
