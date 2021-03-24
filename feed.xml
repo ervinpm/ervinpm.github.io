@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-03-21T08:41:24-05:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Setting up Bind DNS Server in Kubernetes</title><link href="/coding/docker/linux/kubernetes/dns/2021/03/21/dockerize-angular-copy.html" rel="alternate" type="text/html" title="Setting up Bind DNS Server in Kubernetes" /><published>2021-03-21T01:00:00-05:00</published><updated>2021-03-21T01:00:00-05:00</updated><id>/coding/docker/linux/kubernetes/dns/2021/03/21/dockerize-angular%20copy</id><content type="html" xml:base="/coding/docker/linux/kubernetes/dns/2021/03/21/dockerize-angular-copy.html">&lt;p&gt;If you are tired of typing ip addresses to access your home computers, you’ll need a private DNS server so you can just adress them as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;myservername&lt;/code&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-03-23T20:31:39-05:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Let’s Encrypt certficate manager</title><link href="/coding/linux/kubernetes/certificate/lets%20encrypt/2021/03/23/installing-certificate-manager.html" rel="alternate" type="text/html" title="Let’s Encrypt certficate manager" /><published>2021-03-23T01:00:00-05:00</published><updated>2021-03-23T01:00:00-05:00</updated><id>/coding/linux/kubernetes/certificate/lets%20encrypt/2021/03/23/installing-certificate-manager</id><content type="html" xml:base="/coding/linux/kubernetes/certificate/lets%20encrypt/2021/03/23/installing-certificate-manager.html">&lt;p&gt;After setting up your very own Kubernetes instance, one of the first things that you want to do is spin up a simple web server like nginx. You’ll then notice that securing the server (https) will require you to issue certificates. However when you generate a self-signed one, the browser will still complain that it’s not as good as the real thing. Certificate Authorities will cost you money and you don’t want to spend a lot if you are just doing this to learn stuff. Let’s Encrypt lets you do this for free by providing an Automated Certificate Management Environment (ACME). Below are my notes on how I did it.&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-cert-manager&quot;&gt;Installing cert manager&lt;/h2&gt;
+&lt;p&gt;Here is the yaml to install cert manager:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;testing-the-installation&quot;&gt;Testing the installation&lt;/h2&gt;
+&lt;p&gt;To test if it worked, use a self signed certificate&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; test-resources.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After that, you can confirm by describing the created resources:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl describe certificate &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; cert-manager-test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You should have something like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Spec:
+  Common Name:  me.com
+  Issuer Ref:
+    Name:       test-selfsigned
+  Secret Name:  selfsigned-cert-tls
+Status:
+  Conditions:
+    Last Transition Time:  2021-03-05T18:14:30Z
+    Message:               Certificate is up to date and has not expired
+    Reason:                Ready
+    Status:                True
+    Type:                  Ready
+  Not After:               2021-04-09T18:14:21Z
+Events:
+  Type    Reason      Age   From          Message
+  ----    ------      ----  ----          -------
+  Normal  CertIssued  5s    cert-manager  Certificate issued successfully
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After that, you may cleanup the test resources&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl delete &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; test-resources.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;installing-letsencrypt&quot;&gt;Installing letsencrypt&lt;/h3&gt;
+
+&lt;p&gt;This is a very easy step just execute the following&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; letsencrypt-cluster-issuer.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
+&lt;p&gt;https://cert-manager.io/docs/installation/kubernetes/&lt;/p&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="kubernetes" /><category term="certificate" /><category term="lets encrypt" /><summary type="html">After setting up your very own Kubernetes instance, one of the first things that you want to do is spin up a simple web server like nginx. You’ll then notice that securing the server (https) will require you to issue certificates. However when you generate a self-signed one, the browser will still complain that it’s not as good as the real thing. Certificate Authorities will cost you money and you don’t want to spend a lot if you are just doing this to learn stuff. Let’s Encrypt lets you do this for free by providing an Automated Certificate Management Environment (ACME). Below are my notes on how I did it.</summary></entry><entry><title type="html">Updating cron tab editor</title><link href="/coding/linux/crontab/2021/03/22/update-crontab-editor.html" rel="alternate" type="text/html" title="Updating cron tab editor" /><published>2021-03-22T01:00:00-05:00</published><updated>2021-03-22T01:00:00-05:00</updated><id>/coding/linux/crontab/2021/03/22/update-crontab-editor</id><content type="html" xml:base="/coding/linux/crontab/2021/03/22/update-crontab-editor.html">&lt;p&gt;If you want to update the default editor of cron tab, you’ll have to update your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;h2 id=&quot;updating-bashrc&quot;&gt;Updating .bashrc&lt;/h2&gt;
+
+&lt;p&gt;Add the following line to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-bashrc&quot;&gt;export VISUAL=&quot;vim&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;reload-the-configuration&quot;&gt;Reload the configuration&lt;/h2&gt;
+
+&lt;p&gt;To reload without rebooting your machine execute the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="crontab" /><summary type="html">If you want to update the default editor of cron tab, you’ll have to update your .bashrc file.</summary></entry><entry><title type="html">Setting up Bind DNS Server in Kubernetes</title><link href="/coding/docker/linux/kubernetes/dns/2021/03/21/dockerize-angular-copy.html" rel="alternate" type="text/html" title="Setting up Bind DNS Server in Kubernetes" /><published>2021-03-21T01:00:00-05:00</published><updated>2021-03-21T01:00:00-05:00</updated><id>/coding/docker/linux/kubernetes/dns/2021/03/21/dockerize-angular%20copy</id><content type="html" xml:base="/coding/docker/linux/kubernetes/dns/2021/03/21/dockerize-angular-copy.html">&lt;p&gt;If you are tired of typing ip addresses to access your home computers, you’ll need a private DNS server so you can just adress them as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;myservername&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;In this example, I will be using a kubernetes cluster that I already have setup. This also allows you to use it as a DNS forwarder&lt;/p&gt;
 
@@ -621,39 +688,4 @@ Export list &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;192.168.1.101:
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; nfs 192.168.1.101:/home/myuser/myawesomefolder myawesomefolder
 Created symlink /run/systemd/system/remote-fs.target.wants/rpc-statd.service → /usr/lib/systemd/system/rpc-statd.service.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="archlinux" /><summary type="html">Enable NTP First check if your NTP is enabled by doing a timedatectl command:</summary></entry><entry><title type="html">Use kubectl for remote cluster</title><link href="/coding/kubernetes/2021/02/07/kubernetes-remote.html" rel="alternate" type="text/html" title="Use kubectl for remote cluster" /><published>2021-02-07T00:00:00-06:00</published><updated>2021-02-07T00:00:00-06:00</updated><id>/coding/kubernetes/2021/02/07/kubernetes-remote</id><content type="html" xml:base="/coding/kubernetes/2021/02/07/kubernetes-remote.html">&lt;h2 id=&quot;kubectl-installation&quot;&gt;Kubectl Installation&lt;/h2&gt;
-&lt;p&gt;After installing Kubernetes on Bare Metal, you might want to do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; commands on a remote machine. To do that, you’ll have to install &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; on your machine. Installation is found here:&lt;/p&gt;
-
-&lt;p&gt;https://kubernetes.io/docs/tasks/tools/install-kubectl/&lt;/p&gt;
-
-&lt;h2 id=&quot;configuration&quot;&gt;Configuration&lt;/h2&gt;
-
-&lt;p&gt;After instaling kubectl, how do you tell how to connect to your cluster? To do that, you’ll have to go to the kubernetes master node and copy the config file. This is found by default in: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~.kube/config&lt;/code&gt;. Copy that file or the contents and create a similar structured folder. In windows, it looks something like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;C:\Users\username\.kube\config
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="kubernetes" /><summary type="html">Kubectl Installation After installing Kubernetes on Bare Metal, you might want to do kubectl commands on a remote machine. To do that, you’ll have to install kubectl on your machine. Installation is found here:</summary></entry><entry><title type="html">Bootstrap in Angular</title><link href="/coding/angular/2021/01/31/angular-bootstrap.html" rel="alternate" type="text/html" title="Bootstrap in Angular" /><published>2021-01-31T00:00:00-06:00</published><updated>2021-01-31T00:00:00-06:00</updated><id>/coding/angular/2021/01/31/angular-bootstrap</id><content type="html" xml:base="/coding/angular/2021/01/31/angular-bootstrap.html">&lt;p&gt;To integrate bootsrap into your angular installation, you just need to intall the npm package and include the built files in the configuration&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Install Bootstrap and JQuery. At the time of writing, jquery is a dependency of bootstrap.
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;npm &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--save&lt;/span&gt; bootstrap jquery
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Update &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;angular.json&lt;/code&gt; to include the built files.
-    &lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;&quot;architect&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;build&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
- &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; 
- &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;styles&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-     &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;src/styles.css&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-   &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-   &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;scripts&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-     &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;node_modules/jquery/dist/jquery.min.js&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-     &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;node_modules/bootstrap/dist/js/bootstrap.min.js&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-   &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
- &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;import &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;css&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;styles.scss&lt;/code&gt; so that you can override the styles that fit your app.
-    &lt;div class=&quot;language-scss highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@import&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;../node_modules/bootstrap/scss/bootstrap&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;</content><author><name></name></author><category term="coding" /><category term="angular" /><summary type="html">To integrate bootsrap into your angular installation, you just need to intall the npm package and include the built files in the configuration</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="archlinux" /><summary type="html">Enable NTP First check if your NTP is enabled by doing a timedatectl command:</summary></entry></feed>
