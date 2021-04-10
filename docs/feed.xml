@@ -1,4 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-04-10T17:13:52-05:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Cygwin 10,000!!!</title><link href="/coding/linux/windows/2021/04/08/cygwin.html" rel="alternate" type="text/html" title="Cygwin 10,000!!!" /><published>2021-04-08T01:00:00-05:00</published><updated>2021-04-08T01:00:00-05:00</updated><id>/coding/linux/windows/2021/04/08/cygwin</id><content type="html" xml:base="/coding/linux/windows/2021/04/08/cygwin.html">&lt;p&gt;When you are stuck with windows and want to install a linux shell, you can install cygwin to have that unix feel :)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-04-10T17:40:08-05:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">WSL2 Copy Paste</title><link href="/coding/linux/windows/wsl2/vim/2021/04/10/vimwsl-clipboard.html" rel="alternate" type="text/html" title="WSL2 Copy Paste" /><published>2021-04-10T01:00:00-05:00</published><updated>2021-04-10T01:00:00-05:00</updated><id>/coding/linux/windows/wsl2/vim/2021/04/10/vimwsl-clipboard</id><content type="html" xml:base="/coding/linux/windows/wsl2/vim/2021/04/10/vimwsl-clipboard.html">&lt;p&gt;When yanking text in WSL vim, it does not automatically transfer over to the windows clipboard. To do this there is a workaround to use vim-gtk and x server for windows&lt;/p&gt;
+
+&lt;h2 id=&quot;install-vim-gtk&quot;&gt;Install VIM GTK&lt;/h2&gt;
+
+&lt;p&gt;VIM GTK is needed because the default vim installation does not have clipboard installed by default.&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;vim-gtk
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;x-server-for-windows&quot;&gt;X server for Windows&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Download and install from &lt;a href=&quot;https://sourceforge.net/projects/vcxsrv/&quot;&gt;https://sourceforge.net/projects/vcxsrv/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;During the installation, enable the following:
+    &lt;ul&gt;
+      &lt;li&gt;Multiple windows&lt;/li&gt;
+      &lt;li&gt;Start no client&lt;/li&gt;
+      &lt;li&gt;Extra Settings
+        &lt;ul&gt;
+          &lt;li&gt;Clipboard&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Primary selection
+      - Native opengl
+      - Disable access control&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Save your configuration&lt;/li&gt;
+  &lt;li&gt;Copy the configuration to: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\Users\&amp;lt;yourawesomename&amp;gt;\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;wsl2-setup&quot;&gt;WSL2 setup&lt;/h2&gt;
+
+&lt;p&gt;In your wsl terminal, execute these commands to integrate the x server&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ LOCAL_IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /etc/resolv.conf | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;nameserver | &lt;span class=&quot;nb&quot;&gt;awk&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'{print $2}'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DISPLAY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$LOCAL_IP&lt;/span&gt;:0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="windows" /><category term="wsl2" /><category term="vim" /><summary type="html">When yanking text in WSL vim, it does not automatically transfer over to the windows clipboard. To do this there is a workaround to use vim-gtk and x server for windows</summary></entry><entry><title type="html">Cygwin 10,000!!!</title><link href="/coding/linux/windows/2021/04/08/cygwin.html" rel="alternate" type="text/html" title="Cygwin 10,000!!!" /><published>2021-04-08T01:00:00-05:00</published><updated>2021-04-08T01:00:00-05:00</updated><id>/coding/linux/windows/2021/04/08/cygwin</id><content type="html" xml:base="/coding/linux/windows/2021/04/08/cygwin.html">&lt;p&gt;When you are stuck with windows and want to install a linux shell, you can install cygwin to have that unix feel :)&lt;/p&gt;
 
 &lt;h2 id=&quot;install-cygwin&quot;&gt;Install Cygwin&lt;/h2&gt;
 
@@ -581,63 +618,4 @@ $ kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission&lt;/l
   &lt;/li&gt;
   &lt;li&gt;Save and exit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:x&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;Restart Ubuntu or your terminal&lt;/li&gt;
-&lt;/ol&gt;</content><author><name></name></author><category term="coding" /><category term="bash" /><category term="win10" /><category term="ubuntu" /><summary type="html">Bad Interpreter in WSL2 While using WSL2 to manage my jekyll posts, i ran into a problem where in the jekyll commands were getting a bad interpreter: No such file or directory error. After some research, the problem was because it was conflicting with a jekyll path installed on my win10 machine. Fixing this was fairly easy to do: Create or update the wsl.conf $ sudo vim /etc/wsl.conf Add the following lines [interop] appendWindowsPath = false Save and exit :x Restart Ubuntu or your terminal</summary></entry><entry><title type="html">Installing Dynamic NFS Persistent Volume in Kubernetes</title><link href="/coding/kubernetes/2021/02/15/kubernetes-dynamic-nfs.html" rel="alternate" type="text/html" title="Installing Dynamic NFS Persistent Volume in Kubernetes" /><published>2021-02-15T00:00:00-06:00</published><updated>2021-02-15T00:00:00-06:00</updated><id>/coding/kubernetes/2021/02/15/kubernetes-dynamic-nfs</id><content type="html" xml:base="/coding/kubernetes/2021/02/15/kubernetes-dynamic-nfs.html">&lt;h2 id=&quot;prepare-a-nfs&quot;&gt;Prepare a NFS&lt;/h2&gt;
-&lt;p&gt;You will need the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IP&lt;/code&gt; address of the NFS server and the folder path.&lt;/p&gt;
-
-&lt;h2 id=&quot;clone-the-nfs-provisioner&quot;&gt;Clone the NFS Provisioner&lt;/h2&gt;
-&lt;p&gt;NFS Provisioner &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YAML&lt;/code&gt; files are found in Kubernetes SIGS repository. This assumes that you already have git installed&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone git@github.com:kubernetes-sigs/nfs-subdir-external-provisioner.git
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;update-nfs-details&quot;&gt;Update NFS Details&lt;/h2&gt;
-&lt;p&gt;After cloning the repository, udpate &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;deployment.yaml&lt;/code&gt; and change the following to the nfs details that you have noted earlier&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;          &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;PROVISIONER_NAME&lt;/span&gt;
-              &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;k8s-sigs.io/nfs-subdir-external-provisioner&lt;/span&gt;
-            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;NFS_SERVER&lt;/span&gt;
-              &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;replace with NFS IP&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;NFS_PATH&lt;/span&gt;
-              &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;replace with NFS Folder&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nfs-client-root&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;nfs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;replace with NFS IP&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;replace with NFS Folder&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;create-role-based-access-control-rbac&quot;&gt;Create Role Based Access Control (RBAC)&lt;/h2&gt;
-&lt;p&gt;This is needed to allow a pod to automatically create kubernetes objects that will provision Persistent Volumes&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; deploy/rbac.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;update-class-storage-file-configuration&quot;&gt;Update class storage file configuration&lt;/h2&gt;
-&lt;p&gt;You may want to update the default configuration to not delete the entire folder when a persistent volume is destroyed.&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;storage.k8s.io/v1&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;StorageClass&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;managed-nfs-storage&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;provisioner&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;k8s-sigs.io/nfs-subdir-external-provisioner&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# or choose another name, must match deployment's env PROVISIONER_NAME'&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;pathPattern&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;${.PVC.namespace}/${.PVC.annotations.nfs.io/storage-path}&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# waits for nfs.io/storage-path annotation, if not specified will accept as empty string.&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;onDelete&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;delete&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Create the class storage object&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; deploy/class.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;testing&quot;&gt;Testing&lt;/h2&gt;
-&lt;p&gt;This is optional but recommended specially if this is the first time that you are doing this. The repository has test deployments.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl create &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; deploy/test-claim.yaml &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; deploy/test-pod.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Check the NFS Server and see if there is a folder with a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SUCCESS&lt;/code&gt; file name in it. If you see it, then all is set, you may delete the created test objects in your kubernetes installation.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl delete &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; deploy/test-pod.yaml &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; deploy/test-claim.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="kubernetes" /><summary type="html">Prepare a NFS You will need the IP address of the NFS server and the folder path. Clone the NFS Provisioner NFS Provisioner YAML files are found in Kubernetes SIGS repository. This assumes that you already have git installed $ git clone git@github.com:kubernetes-sigs/nfs-subdir-external-provisioner.git Update NFS Details After cloning the repository, udpate deployment.yaml and change the following to the nfs details that you have noted earlier env: - name: PROVISIONER_NAME value: k8s-sigs.io/nfs-subdir-external-provisioner - name: NFS_SERVER value: &amp;lt;replace with NFS IP&amp;gt; - name: NFS_PATH value: &amp;lt;replace with NFS Folder&amp;gt; volumes: - name: nfs-client-root nfs: server: &amp;lt;replace with NFS IP&amp;gt; path: &amp;lt;replace with NFS Folder&amp;gt; Create Role Based Access Control (RBAC) This is needed to allow a pod to automatically create kubernetes objects that will provision Persistent Volumes $ kubectl create -f deploy/rbac.yaml Update class storage file configuration You may want to update the default configuration to not delete the entire folder when a persistent volume is destroyed. apiVersion: storage.k8s.io/v1 kind: StorageClass metadata: name: managed-nfs-storage provisioner: k8s-sigs.io/nfs-subdir-external-provisioner # or choose another name, must match deployment's env PROVISIONER_NAME' parameters: pathPattern: &quot;${.PVC.namespace}/${.PVC.annotations.nfs.io/storage-path}&quot; # waits for nfs.io/storage-path annotation, if not specified will accept as empty string. onDelete: delete Create the class storage object $ kubectl create -f deploy/class.yaml Testing This is optional but recommended specially if this is the first time that you are doing this. The repository has test deployments. $ kubectl create -f deploy/test-claim.yaml -f deploy/test-pod.yaml Check the NFS Server and see if there is a folder with a SUCCESS file name in it. If you see it, then all is set, you may delete the created test objects in your kubernetes installation. $ kubectl delete -f deploy/test-pod.yaml -f deploy/test-claim.yaml</summary></entry></feed>
+&lt;/ol&gt;</content><author><name></name></author><category term="coding" /><category term="bash" /><category term="win10" /><category term="ubuntu" /><summary type="html">Bad Interpreter in WSL2 While using WSL2 to manage my jekyll posts, i ran into a problem where in the jekyll commands were getting a bad interpreter: No such file or directory error. After some research, the problem was because it was conflicting with a jekyll path installed on my win10 machine. Fixing this was fairly easy to do: Create or update the wsl.conf $ sudo vim /etc/wsl.conf Add the following lines [interop] appendWindowsPath = false Save and exit :x Restart Ubuntu or your terminal</summary></entry></feed>
