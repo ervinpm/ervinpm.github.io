@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Deploy Angular App to Kubernetes | $ ervinpm</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Deploy Angular App to Kubernetes" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="To deploy an angular app to kubernetes, you’ll have to containerize you application. In this example, I am going to use docker. Create a docker file Place this in the root folder of your angular poroject FROM nginx:1.17.1-alpine COPY nginx.conf /etc/nginx/nginx.conf COPY /dist/myawesome-app /usr/share/nginx/html Create nginx config file Place this in the root folder of your angular project events{} http { include /etc/nginx/mime.types; server { listen 8080; server_name localhost; root /usr/share/nginx/html; index index.html; location / { try_files $uri $uri/ /index.html; } } } Build your angular project If you are deploying your project in a subfolder like i am, you’ll have to specify the base href value. Note: I had to execute this in windows cmd.exe because of a weird bug in ng cli where the folder absolute path was being appended. $ ng build --prod --base-href=&quot;/myawesome-app/&quot; Build the container image In the example below, I am using a private registry, you can omit the registry address if you are using docker hub. The period . at the end is intentional. $ docker build -t registry.example.com/myawesome-app:latest . Push the image to your registry $ docker push registry.example.com/myawesome-app:latest Create a deploy configuration in Kubernetes In the deploy configuration, make sure to set imagePullPolicy to Always so it can pickup changes right away apiVersion: apps/v1 kind: Deployment metadata: name: myawesome-app labels: app: myawesome-app spec: replicas: 1 selector: matchLabels: app: myawesome-app template: metadata: labels: app: myawesome-app spec: containers: - image: registry.example.com/myawesome-app name: myawesome-app imagePullPolicy: Always ports: - containerPort: 8080 Create a service Expose your app using a service, you may choose to create a NodeIP but I’ll be creating a ClusterIP since I’ll be using an ingress configuration. apiVersion: v1 kind: Service metadata: name: myawesome-app labels: app: myawesome-app spec: type: ClusterIP selector: app: myawesome-app ports: - port: 8080 targetPort: 8080 protocol: TCP Create ingress rule If you are going to use a sub directory in your host, the you’ll have to add a regex path: (/|$)(.*) apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: myawesome-app labels: app: myawesome-app spec: rules: - host: www.mydomain.com http: paths: - path: /myawesome-app(/|$)(.*) pathType: Prefix backend: service: name: myawesome-app port: number: 8080" />
+<meta property="og:description" content="To deploy an angular app to kubernetes, you’ll have to containerize you application. In this example, I am going to use docker. Create a docker file Place this in the root folder of your angular poroject FROM nginx:1.17.1-alpine COPY nginx.conf /etc/nginx/nginx.conf COPY /dist/myawesome-app /usr/share/nginx/html Create nginx config file Place this in the root folder of your angular project events{} http { include /etc/nginx/mime.types; server { listen 8080; server_name localhost; root /usr/share/nginx/html; index index.html; location / { try_files $uri $uri/ /index.html; } } } Build your angular project If you are deploying your project in a subfolder like i am, you’ll have to specify the base href value. Note: I had to execute this in windows cmd.exe because of a weird bug in ng cli where the folder absolute path was being appended. $ ng build --prod --base-href=&quot;/myawesome-app/&quot; Build the container image In the example below, I am using a private registry, you can omit the registry address if you are using docker hub. The period . at the end is intentional. $ docker build -t registry.example.com/myawesome-app:latest . Push the image to your registry $ docker push registry.example.com/myawesome-app:latest Create a deploy configuration in Kubernetes In the deploy configuration, make sure to set imagePullPolicy to Always so it can pickup changes right away apiVersion: apps/v1 kind: Deployment metadata: name: myawesome-app labels: app: myawesome-app spec: replicas: 1 selector: matchLabels: app: myawesome-app template: metadata: labels: app: myawesome-app spec: containers: - image: registry.example.com/myawesome-app name: myawesome-app imagePullPolicy: Always ports: - containerPort: 8080 Create a service Expose your app using a service, you may choose to create a NodeIP but I’ll be creating a ClusterIP since I’ll be using an ingress configuration. apiVersion: v1 kind: Service metadata: name: myawesome-app labels: app: myawesome-app spec: type: ClusterIP selector: app: myawesome-app ports: - port: 8080 targetPort: 8080 protocol: TCP Create ingress rule If you are going to use a sub directory in your host, the you’ll have to add a regex path: (/|$)(.*) apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: myawesome-app labels: app: myawesome-app spec: rules: - host: www.mydomain.com http: paths: - path: /myawesome-app(/|$)(.*) pathType: Prefix backend: service: name: myawesome-app port: number: 8080" />
+<link rel="canonical" href="/coding/docker/angular/linux/nginx/2021/03/19/dns-server.html" />
+<meta property="og:url" content="/coding/docker/angular/linux/nginx/2021/03/19/dns-server.html" />
+<meta property="og:site_name" content="$ ervinpm" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-19T01:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Deploy Angular App to Kubernetes" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"/coding/docker/angular/linux/nginx/2021/03/19/dns-server.html","headline":"Deploy Angular App to Kubernetes","dateModified":"2021-03-19T01:00:00-05:00","datePublished":"2021-03-19T01:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"/coding/docker/angular/linux/nginx/2021/03/19/dns-server.html"},"description":"To deploy an angular app to kubernetes, you’ll have to containerize you application. In this example, I am going to use docker. Create a docker file Place this in the root folder of your angular poroject FROM nginx:1.17.1-alpine COPY nginx.conf /etc/nginx/nginx.conf COPY /dist/myawesome-app /usr/share/nginx/html Create nginx config file Place this in the root folder of your angular project events{} http { include /etc/nginx/mime.types; server { listen 8080; server_name localhost; root /usr/share/nginx/html; index index.html; location / { try_files $uri $uri/ /index.html; } } } Build your angular project If you are deploying your project in a subfolder like i am, you’ll have to specify the base href value. Note: I had to execute this in windows cmd.exe because of a weird bug in ng cli where the folder absolute path was being appended. $ ng build --prod --base-href=&quot;/myawesome-app/&quot; Build the container image In the example below, I am using a private registry, you can omit the registry address if you are using docker hub. The period . at the end is intentional. $ docker build -t registry.example.com/myawesome-app:latest . Push the image to your registry $ docker push registry.example.com/myawesome-app:latest Create a deploy configuration in Kubernetes In the deploy configuration, make sure to set imagePullPolicy to Always so it can pickup changes right away apiVersion: apps/v1 kind: Deployment metadata: name: myawesome-app labels: app: myawesome-app spec: replicas: 1 selector: matchLabels: app: myawesome-app template: metadata: labels: app: myawesome-app spec: containers: - image: registry.example.com/myawesome-app name: myawesome-app imagePullPolicy: Always ports: - containerPort: 8080 Create a service Expose your app using a service, you may choose to create a NodeIP but I’ll be creating a ClusterIP since I’ll be using an ingress configuration. apiVersion: v1 kind: Service metadata: name: myawesome-app labels: app: myawesome-app spec: type: ClusterIP selector: app: myawesome-app ports: - port: 8080 targetPort: 8080 protocol: TCP Create ingress rule If you are going to use a sub directory in your host, the you’ll have to add a regex path: (/|$)(.*) apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: myawesome-app labels: app: myawesome-app spec: rules: - host: www.mydomain.com http: paths: - path: /myawesome-app(/|$)(.*) pathType: Prefix backend: service: name: myawesome-app port: number: 8080","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="$ ervinpm" /></head>
+  <body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">$ ervinpm</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Deploy Angular App to Kubernetes</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2021-03-19T01:00:00-05:00" itemprop="datePublished">Mar 19, 2021
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>To deploy an angular app to kubernetes, you’ll have to containerize you application. In this example, I am going to use docker.</p>
+
+<h2 id="create-a-docker-file">Create a docker file</h2>
+
+<p>Place this in the root folder of your angular poroject</p>
+
+<div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> nginx:1.17.1-alpine</span>
+<span class="k">COPY</span><span class="s"> nginx.conf /etc/nginx/nginx.conf</span>
+<span class="k">COPY</span><span class="s"> /dist/myawesome-app /usr/share/nginx/html</span>
+</code></pre></div></div>
+
+<h2 id="create-nginx-config-file">Create nginx config file</h2>
+
+<p>Place this in the root folder of your angular project</p>
+
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">events</span>{}
+
+<span class="n">http</span> {
+
+    <span class="n">include</span> /<span class="n">etc</span>/<span class="n">nginx</span>/<span class="n">mime</span>.<span class="n">types</span>;
+
+    <span class="n">server</span> {
+
+        <span class="n">listen</span> <span class="m">8080</span>;
+        <span class="n">server_name</span> <span class="n">localhost</span>;
+        <span class="n">root</span> /<span class="n">usr</span>/<span class="n">share</span>/<span class="n">nginx</span>/<span class="n">html</span>;
+        <span class="n">index</span> <span class="n">index</span>.<span class="n">html</span>;
+
+        <span class="n">location</span> / {
+                <span class="n">try_files</span> $<span class="n">uri</span> $<span class="n">uri</span>/ /<span class="n">index</span>.<span class="n">html</span>;
+        }
+    }
+}
+</code></pre></div></div>
+
+<h2 id="build-your-angular-project">Build your angular project</h2>
+
+<p>If you are deploying your project in a subfolder like i am, you’ll have to specify the base href value. Note: I had to execute this in windows <code class="language-plaintext highlighter-rouge">cmd.exe</code> because of a weird bug in <code class="language-plaintext highlighter-rouge">ng cli</code> where the folder absolute path was being appended.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ng build <span class="nt">--prod</span> <span class="nt">--base-href</span><span class="o">=</span><span class="s2">"/myawesome-app/"</span>
+</code></pre></div></div>
+
+<h2 id="build-the-container-image">Build the container image</h2>
+
+<p>In the example below, I am using a private registry, you can omit the registry address if you are using docker hub. The period <code class="language-plaintext highlighter-rouge">.</code> at the end is intentional.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker build <span class="nt">-t</span> registry.example.com/myawesome-app:latest <span class="nb">.</span>
+</code></pre></div></div>
+
+<h2 id="push-the-image-to-your-registry">Push the image to your registry</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker push registry.example.com/myawesome-app:latest
+</code></pre></div></div>
+
+<h2 id="create-a-deploy-configuration-in-kubernetes">Create a deploy configuration in Kubernetes</h2>
+
+<p>In the deploy configuration, make sure to set <code class="language-plaintext highlighter-rouge">imagePullPolicy</code> to <code class="language-plaintext highlighter-rouge">Always</code> so it can pickup changes right away</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">myawesome-app</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">myawesome-app</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">myawesome-app</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">myawesome-app</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">image</span><span class="pi">:</span> <span class="s">registry.example.com/myawesome-app</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">myawesome-app</span>
+          <span class="na">imagePullPolicy</span><span class="pi">:</span> <span class="s">Always</span>
+          <span class="na">ports</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">8080</span>
+</code></pre></div></div>
+
+<h2 id="create-a-service">Create a service</h2>
+
+<p>Expose your app using a service, you may choose to create a <code class="language-plaintext highlighter-rouge">NodeIP</code> but I’ll be creating a <code class="language-plaintext highlighter-rouge">ClusterIP</code> since I’ll be using an ingress configuration.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">myawesome-app</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">myawesome-app</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">ClusterIP</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">myawesome-app</span>
+  <span class="na">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">8080</span>
+    <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
+    <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+
+</code></pre></div></div>
+
+<h2 id="create-ingress-rule">Create ingress rule</h2>
+
+<p>If you are going to use a sub directory in your host, the you’ll have to add a regex path: <code class="language-plaintext highlighter-rouge">(/|$)(.*)</code></p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">networking.k8s.io/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Ingress</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">myawesome-app</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">myawesome-app</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">rules</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">host</span><span class="pi">:</span> <span class="s">www.mydomain.com</span>
+    <span class="na">http</span><span class="pi">:</span>
+      <span class="na">paths</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">path</span><span class="pi">:</span> <span class="s">/myawesome-app(/|$)(.*)</span>
+        <span class="na">pathType</span><span class="pi">:</span> <span class="s">Prefix</span>
+        <span class="na">backend</span><span class="pi">:</span>
+          <span class="na">service</span><span class="pi">:</span>
+            <span class="na">name</span><span class="pi">:</span> <span class="s">myawesome-app</span>
+            <span class="na">port</span><span class="pi">:</span>
+              <span class="na">number</span><span class="pi">:</span> <span class="m">8080</span>
+</code></pre></div></div>
+
+  </div><a class="u-url" href="/coding/docker/angular/linux/nginx/2021/03/19/dns-server.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+    <data class="u-url" href="/"></data>
+  
+    <div class="wrapper">
+  
+      <h2 class="footer-heading">$ ervinpm</h2>
+      
+      <a href="https://www.buymeacoffee.com/ervinpm"><img style="width: 160px;" src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=ervinpm&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"></a>
+
+      <div class="footer-col-wrapper">
+        <div class="footer-col footer-col-1">
+          <ul class="contact-list">
+            <li class="p-name">$ ervinpm</li><li><a class="u-email" href="mailto:me@ervinpm.com">me@ervinpm.com</a></li></ul>
+        </div>
+  
+        <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/ervinpm"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">ervinpm</span></a></li><li><a href="https://www.twitter.com/ervipm"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">ervipm</span></a></li></ul>
+</div>
+  
+        <div class="footer-col footer-col-3">
+          <p>Still working on it</p>
+        </div>
+      </div>
+  
+    </div>
+  
+  </footer>
+</body>
+
+</html>
