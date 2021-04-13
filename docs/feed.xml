@@ -1,4 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-04-10T17:40:08-05:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">WSL2 Copy Paste</title><link href="/coding/linux/windows/wsl2/vim/2021/04/10/vimwsl-clipboard.html" rel="alternate" type="text/html" title="WSL2 Copy Paste" /><published>2021-04-10T01:00:00-05:00</published><updated>2021-04-10T01:00:00-05:00</updated><id>/coding/linux/windows/wsl2/vim/2021/04/10/vimwsl-clipboard</id><content type="html" xml:base="/coding/linux/windows/wsl2/vim/2021/04/10/vimwsl-clipboard.html">&lt;p&gt;When yanking text in WSL vim, it does not automatically transfer over to the windows clipboard. To do this there is a workaround to use vim-gtk and x server for windows&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-04-13T13:57:27-05:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Dealing With Ingress Path Problems</title><link href="/coding/linux/kubernetes/2021/04/12/ingress-path-problems.html" rel="alternate" type="text/html" title="Dealing With Ingress Path Problems" /><published>2021-04-12T01:00:00-05:00</published><updated>2021-04-12T01:00:00-05:00</updated><id>/coding/linux/kubernetes/2021/04/12/ingress-path-problems</id><content type="html" xml:base="/coding/linux/kubernetes/2021/04/12/ingress-path-problems.html">&lt;p&gt;Because I am a noob at kubernetes, I have been having problems deploying applications and creating ingress paths. I only wanted a single doman then different paths like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apps.myk8s.com/app1&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apps.myk8s.com/app2&lt;/code&gt; so on and so forth…&lt;/p&gt;
+
+&lt;p&gt;Everytime I create an ingress an ingress rule, I get a lot of issues with the html components (i.e. css, images and js) and getting 404s. To resolve this, I just needed to add a couple of annotations:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;networking.k8s.io/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Ingress&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;app1&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;app1&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;annotations&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;nginx.ingress.kubernetes.io/rewrite-target&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/$2&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;nginx.ingress.kubernetes.io/configuration-snippet&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
+      &lt;span class=&quot;s&quot;&gt;rewrite ^(/app1)$ $1/ permanent;&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;apps.myk8s.com&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/app1(/|$)(.*)&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;pathType&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Prefix&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;backend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;app1&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8080&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The first annotation tells ingress to pass the parameters to the service without the sub folder. The second annotaton tells ingress to append &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt; at the end of the address if it is missing. This resolves the resources not being relative to the subfolder.&lt;/p&gt;
+
+&lt;p&gt;The path has 2 regex groups that detect the presence of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt; and parameters that is used by the annotations.&lt;/p&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="kubernetes" /><summary type="html">Because I am a noob at kubernetes, I have been having problems deploying applications and creating ingress paths. I only wanted a single doman then different paths like apps.myk8s.com/app1, apps.myk8s.com/app2 so on and so forth…</summary></entry><entry><title type="html">WSL2 Copy Paste</title><link href="/coding/linux/windows/wsl2/vim/2021/04/10/vimwsl-clipboard.html" rel="alternate" type="text/html" title="WSL2 Copy Paste" /><published>2021-04-10T01:00:00-05:00</published><updated>2021-04-10T01:00:00-05:00</updated><id>/coding/linux/windows/wsl2/vim/2021/04/10/vimwsl-clipboard</id><content type="html" xml:base="/coding/linux/windows/wsl2/vim/2021/04/10/vimwsl-clipboard.html">&lt;p&gt;When yanking text in WSL vim, it does not automatically transfer over to the windows clipboard. To do this there is a workaround to use vim-gtk and x server for windows&lt;/p&gt;
 
 &lt;h2 id=&quot;install-vim-gtk&quot;&gt;Install VIM GTK&lt;/h2&gt;
 
@@ -602,20 +633,4 @@ $ kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission&lt;/l
 &lt;p&gt;After doing changes in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt;, you’ll have to reload using the following command:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bashrc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="bash" /><category term="archlinux" /><summary type="html">Reloading .bashrc After doing changes in .bashrc, you’ll have to reload using the following command: $ source ~/.bashrc</summary></entry><entry><title type="html">Bad Interpreter in WSL2</title><link href="/coding/bash/win10/ubuntu/2021/03/07/wsl2-badinterpreter.html" rel="alternate" type="text/html" title="Bad Interpreter in WSL2" /><published>2021-03-07T00:00:00-06:00</published><updated>2021-03-07T00:00:00-06:00</updated><id>/coding/bash/win10/ubuntu/2021/03/07/wsl2-badinterpreter</id><content type="html" xml:base="/coding/bash/win10/ubuntu/2021/03/07/wsl2-badinterpreter.html">&lt;h1 id=&quot;bad-interpreter-in-wsl2&quot;&gt;Bad Interpreter in WSL2&lt;/h1&gt;
-
-&lt;p&gt;While using WSL2 to manage my jekyll posts, i ran into a problem where in the jekyll commands were getting a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bad interpreter: No such file or directory&lt;/code&gt; error. After some research, the problem was because it was conflicting with a jekyll path installed on my win10 machine. Fixing this was fairly easy to do:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Create or update the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wsl.conf&lt;/code&gt;
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vim /etc/wsl.conf
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Add the following lines
-    &lt;div class=&quot;language-conf highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[&lt;span class=&quot;n&quot;&gt;interop&lt;/span&gt;]
-&lt;span class=&quot;n&quot;&gt;appendWindowsPath&lt;/span&gt; = &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Save and exit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:x&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Restart Ubuntu or your terminal&lt;/li&gt;
-&lt;/ol&gt;</content><author><name></name></author><category term="coding" /><category term="bash" /><category term="win10" /><category term="ubuntu" /><summary type="html">Bad Interpreter in WSL2 While using WSL2 to manage my jekyll posts, i ran into a problem where in the jekyll commands were getting a bad interpreter: No such file or directory error. After some research, the problem was because it was conflicting with a jekyll path installed on my win10 machine. Fixing this was fairly easy to do: Create or update the wsl.conf $ sudo vim /etc/wsl.conf Add the following lines [interop] appendWindowsPath = false Save and exit :x Restart Ubuntu or your terminal</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="bash" /><category term="archlinux" /><summary type="html">Reloading .bashrc After doing changes in .bashrc, you’ll have to reload using the following command: $ source ~/.bashrc</summary></entry></feed>
