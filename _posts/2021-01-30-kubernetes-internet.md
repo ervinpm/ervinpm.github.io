@@ -63,6 +63,18 @@ Set the value to the name of the network interface you got in step 1. Here is ho
 
 **That's it!** these two steps solved this problem. 
 
+## Still no internet or intermittent
+
+Make sure that you have the same number of `coredns` pods running with the number of your nodes. To do that you can use this command:
+```sh
+$ kubectl get pods -n kube-system -o wide | grep coredns
+```
+
+Edit the number of replicas by using this command:
+```sh
+$ kubectl edit deployment coredns -n kube-system
+```
+
 ### References
 
 https://medium.com/@anilkreddyr/kubernetes-with-flannel-understanding-the-networking-part-1-7e1fe51820e4
@@ -70,3 +82,5 @@ https://medium.com/@anilkreddyr/kubernetes-with-flannel-understanding-the-networ
 https://www.mankier.com/1/kubectl-edit
 
 https://www.jeffgeerling.com/blog/2019/debugging-networking-issues-multi-node-kubernetes-on-virtualbox
+
+https://stackoverflow.com/questions/63659388/k8s-no-internet-connection-inside-the-container
