@@ -9,19 +9,29 @@ After the painful setup of kubernetes in arch linux, the applications deployed i
 
 ### Testing if pods have Internet
 
-For you to test if your `Jenkins` instance has internet you can `ssh` into it by using this command:
+Test by using busy box image:
 
 ```bash
-$ kubectl exec -i -t jenkins-pod-name -n jenkins -- /bin/bash
+$ kubectl run -i --tty --rm busybox --image=busybox -- sh
 $ ping google.com
+```
+
+### Testing if pods can connect to the DNS
+
+To test if your pods can talk to each other, you can run a `busy-box` instance and do a ping there. Just make sure that they are on the same namespace. 
+
+```bash
+$ kubectl run -i --tty --rm busybox --image=busybox -- sh
+$ nslookup kubernetes.default
 ```
 
 ### Testing if pods can talk to each other
 
-To test if your pods can talk to each other, you can run a `busy-box` instance and do a ping there. Just make sure that they are on the same namespace. In my case the namespace is `jenkins` Here is the command:
+To test if your pods can talk to each other, you can run a `busy-box` instance and do a ping there. Just make sure that they are on the same namespace. 
 
 ```bash
-$ kubectl run -i --tty --rm debug --image=busybox -n jenkins --restart=Never -- sh
+$ kubectl run -i --tty --rm busybox --image=busybox -- sh
+$ ping <another pod's ip>
 ```
 
 ### Updating Flannel Daemon
@@ -75,6 +85,13 @@ Edit the number of replicas by using this command:
 $ kubectl edit deployment coredns -n kube-system
 ```
 
+## Still no internet?! and pods can't talk to each other?
+
+Another cause would be because of the flannel network, try restarting or deleting the pods to force new pods
+```sh
+$ kubectl delete pods --selector=app=flannel -n=kube-system
+```
+
 ### References
 
 https://medium.com/@anilkreddyr/kubernetes-with-flannel-understanding-the-networking-part-1-7e1fe51820e4
@@ -84,3 +101,5 @@ https://www.mankier.com/1/kubectl-edit
 https://www.jeffgeerling.com/blog/2019/debugging-networking-issues-multi-node-kubernetes-on-virtualbox
 
 https://stackoverflow.com/questions/63659388/k8s-no-internet-connection-inside-the-container
+
+https://github.com/flannel-io/flannel/issues/1321
