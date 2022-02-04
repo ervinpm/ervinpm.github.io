@@ -6,21 +6,21 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"><!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Updating cron tab editor | $ ervinpm</title>
+<title>No colors with tmux vim | $ ervinpm</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="Updating cron tab editor" />
+<meta property="og:title" content="No colors with tmux vim" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="If you want to update the default editor of cron tab, you’ll have to update your .bashrc file. Updating .bashrc Add the following line to your .bashrc export VISUAL=&quot;vim&quot; Reload the configuration To reload without rebooting your machine execute the following command: $ source ~/.bashrc" />
-<meta property="og:description" content="If you want to update the default editor of cron tab, you’ll have to update your .bashrc file. Updating .bashrc Add the following line to your .bashrc export VISUAL=&quot;vim&quot; Reload the configuration To reload without rebooting your machine execute the following command: $ source ~/.bashrc" />
-<link rel="canonical" href="/coding/linux/crontab/2021/03/22/update-crontab-editor.html" />
-<meta property="og:url" content="/coding/linux/crontab/2021/03/22/update-crontab-editor.html" />
+<meta name="description" content="When running vim inside tmux the first time, the colors does not display properly. This is caused by tmux using a different terminal. To set a terminal that supports color, you’ll have to set a default one in ~/.tmux.conf" />
+<meta property="og:description" content="When running vim inside tmux the first time, the colors does not display properly. This is caused by tmux using a different terminal. To set a terminal that supports color, you’ll have to set a default one in ~/.tmux.conf" />
+<link rel="canonical" href="/coding/linux/tmux/vim/2021/06/25/tmux-vim.html" />
+<meta property="og:url" content="/coding/linux/tmux/vim/2021/06/25/tmux-vim.html" />
 <meta property="og:site_name" content="$ ervinpm" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-03-22T01:00:00-05:00" />
+<meta property="article:published_time" content="2021-06-25T01:00:00-05:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Updating cron tab editor" />
+<meta property="twitter:title" content="No colors with tmux vim" />
 <script type="application/ld+json">
-{"headline":"Updating cron tab editor","dateModified":"2021-03-22T01:00:00-05:00","description":"If you want to update the default editor of cron tab, you’ll have to update your .bashrc file. Updating .bashrc Add the following line to your .bashrc export VISUAL=&quot;vim&quot; Reload the configuration To reload without rebooting your machine execute the following command: $ source ~/.bashrc","datePublished":"2021-03-22T01:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"/coding/linux/crontab/2021/03/22/update-crontab-editor.html"},"url":"/coding/linux/crontab/2021/03/22/update-crontab-editor.html","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"headline":"No colors with tmux vim","dateModified":"2021-06-25T01:00:00-05:00","description":"When running vim inside tmux the first time, the colors does not display properly. This is caused by tmux using a different terminal. To set a terminal that supports color, you’ll have to set a default one in ~/.tmux.conf","datePublished":"2021-06-25T01:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"/coding/linux/tmux/vim/2021/06/25/tmux-vim.html"},"url":"/coding/linux/tmux/vim/2021/06/25/tmux-vim.html","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="$ ervinpm" /></head>
   <body><header class="site-header" role="banner">
@@ -43,30 +43,20 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Updating cron tab editor</h1>
+    <h1 class="post-title p-name" itemprop="name headline">No colors with tmux vim</h1>
     <p class="post-meta">
-      <time class="dt-published" datetime="2021-03-22T01:00:00-05:00" itemprop="datePublished">Mar 22, 2021
+      <time class="dt-published" datetime="2021-06-25T01:00:00-05:00" itemprop="datePublished">Jun 25, 2021
       </time></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>If you want to update the default editor of cron tab, you’ll have to update your <code class="language-plaintext highlighter-rouge">.bashrc</code> file.</p>
+    <p>When running vim inside tmux the first time, the colors does not display properly. This is caused by tmux using a different terminal. To set a terminal that supports color, you’ll have to set a default one in <code class="language-plaintext highlighter-rouge">~/.tmux.conf</code></p>
 
-<h2 id="updating-bashrc">Updating .bashrc</h2>
-
-<p>Add the following line to your <code class="language-plaintext highlighter-rouge">.bashrc</code></p>
-
-<pre><code class="language-bashrc">export VISUAL="vim"
-</code></pre>
-
-<h2 id="reload-the-configuration">Reload the configuration</h2>
-
-<p>To reload without rebooting your machine execute the following command:</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">source</span> ~/.bashrc
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">set</span> -<span class="n">g</span> <span class="n">default</span>-<span class="n">terminal</span> <span class="s2">"xterm-256color"</span>
 </code></pre></div></div>
 
-  </div><a class="u-url" href="/coding/linux/crontab/2021/03/22/update-crontab-editor.html" hidden></a>
+
+  </div><a class="u-url" href="/coding/linux/tmux/vim/2021/06/25/tmux-vim.html" hidden></a>
 </article>
 
       </div>
