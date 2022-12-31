@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-03T22:55:43-06:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Apply wallpaper for DWM with LightDM</title><link href="/coding/linux/dwm/lightdm/2022/02/03/dwm-wallpaper.html" rel="alternate" type="text/html" title="Apply wallpaper for DWM with LightDM" /><published>2022-02-03T00:00:00-06:00</published><updated>2022-02-03T00:00:00-06:00</updated><id>/coding/linux/dwm/lightdm/2022/02/03/dwm-wallpaper</id><content type="html" xml:base="/coding/linux/dwm/lightdm/2022/02/03/dwm-wallpaper.html">&lt;p&gt;To apply a wallpaper in dwm and you have lightdm, you can use this solution&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-12-31T14:24:18-06:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Create a git server</title><link href="/coding/linux/git/2022/12/31/create-git-server.html" rel="alternate" type="text/html" title="Create a git server" /><published>2022-12-31T00:00:00-06:00</published><updated>2022-12-31T00:00:00-06:00</updated><id>/coding/linux/git/2022/12/31/create-git-server</id><content type="html" xml:base="/coding/linux/git/2022/12/31/create-git-server.html">&lt;p&gt;To create a git server&lt;/p&gt;
+
+&lt;h2 id=&quot;create-a-git-user&quot;&gt;Create a git user&lt;/h2&gt;
+
+&lt;p&gt;Note: step might be optional when user &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git&lt;/code&gt; already exists&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;useradd &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-the-home-folder-for-git&quot;&gt;Create the home folder for git&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo mkdir&lt;/span&gt; /home/git
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chmod &lt;/span&gt;700 /home/git
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chown&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-R&lt;/span&gt; git:git /home
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-ssh-folder&quot;&gt;Create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ssh&lt;/code&gt; folder&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;su git &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; /bin/bash
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; .ssh
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;700 .ssh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-authorized_keys&quot;&gt;Create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;authorized_keys&lt;/code&gt;&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; .ssh/authorized_keys
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;600 .ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Copy your public keys to this file&lt;/p&gt;
+
+&lt;h2 id=&quot;create-a-repository&quot;&gt;Create a repository&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;hello-world.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;cloning-the-repo&quot;&gt;Cloning the repo&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone git@myserver.home:hello-world.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="git" /><summary type="html">To create a git server</summary></entry><entry><title type="html">Apply wallpaper for DWM with LightDM</title><link href="/coding/linux/dwm/lightdm/2022/02/03/dwm-wallpaper.html" rel="alternate" type="text/html" title="Apply wallpaper for DWM with LightDM" /><published>2022-02-03T00:00:00-06:00</published><updated>2022-02-03T00:00:00-06:00</updated><id>/coding/linux/dwm/lightdm/2022/02/03/dwm-wallpaper</id><content type="html" xml:base="/coding/linux/dwm/lightdm/2022/02/03/dwm-wallpaper.html">&lt;p&gt;To apply a wallpaper in dwm and you have lightdm, you can use this solution&lt;/p&gt;
 
 &lt;h2 id=&quot;install-feh&quot;&gt;Install feh&lt;/h2&gt;
 
@@ -314,129 +353,4 @@ Events:
 
 &lt;h2 id=&quot;router-configuration&quot;&gt;Router Configuration&lt;/h2&gt;
 
-&lt;p&gt;For this to work, you either setup each of your computers or the router. By default, the router will use DNS of your Internet Service Provider (ISP). I changed this to point to the IP assigned by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MetalLB&lt;/code&gt; for the DNS server.&lt;/p&gt;</content><author><name></name></author><category term="coding" /><category term="docker" /><category term="linux" /><category term="kubernetes" /><category term="dns" /><summary type="html">If you are tired of typing ip addresses to access your home computers, you’ll need a private DNS server so you can just adress them as myservername. In this example, I will be using a kubernetes cluster that I already have setup. This also allows you to use it as a DNS forwarder Deplyment configuration apiVersion: apps/v1 kind: Deployment metadata: name: bind-deployment labels: app: bind spec: replicas: 1 selector: matchLabels: app: bind template: metadata: labels: app: bind spec: containers: - name: bind image: cytopia/bind env: - name: ALLOW_QUERY value: 192.168.1.0/24,127.0.0.1,localnets - name: EXTRA_HOSTS value: myserver01=192.168.1.101,myserver02=192.168.1.102,myserver03=192.168.1.103,myserver04=192.168.1.104 - name: DNS_FORWARDER value: 8.8.8.8 - name: ALLOW_RECURSION value: 192.168.1.0/24,127.0.0.1,localnets ports: - containerPort: 53 Service Configuration I used MetalLB for load balancing configuration. This will allow you to point a router or a computer to the DNS server with default port (53). apiVersion: v1 kind: Service metadata: name: bind-service spec: type: LoadBalancer selector: app: bind ports: - port: 53 targetPort: 53 protocol: UDP Router Configuration For this to work, you either setup each of your computers or the router. By default, the router will use DNS of your Internet Service Provider (ISP). I changed this to point to the IP assigned by MetalLB for the DNS server.</summary></entry><entry><title type="html">Deploy Angular App to Kubernetes</title><link href="/coding/docker/angular/linux/nginx/2021/03/19/dns-server.html" rel="alternate" type="text/html" title="Deploy Angular App to Kubernetes" /><published>2021-03-19T01:00:00-05:00</published><updated>2021-03-19T01:00:00-05:00</updated><id>/coding/docker/angular/linux/nginx/2021/03/19/dns-server</id><content type="html" xml:base="/coding/docker/angular/linux/nginx/2021/03/19/dns-server.html">&lt;p&gt;To deploy an angular app to kubernetes, you’ll have to containerize you application. In this example, I am going to use docker.&lt;/p&gt;
-
-&lt;h2 id=&quot;create-a-docker-file&quot;&gt;Create a docker file&lt;/h2&gt;
-
-&lt;p&gt;Place this in the root folder of your angular poroject&lt;/p&gt;
-
-&lt;div class=&quot;language-Dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; nginx:1.17.1-alpine&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; nginx.conf /etc/nginx/nginx.conf&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; /dist/myawesome-app /usr/share/nginx/html&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;create-nginx-config-file&quot;&gt;Create nginx config file&lt;/h2&gt;
-
-&lt;p&gt;Place this in the root folder of your angular project&lt;/p&gt;
-
-&lt;div class=&quot;language-conf highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;events&lt;/span&gt;{}
-
-&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt; {
-
-    &lt;span class=&quot;n&quot;&gt;include&lt;/span&gt; /&lt;span class=&quot;n&quot;&gt;etc&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;nginx&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;mime&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;;
-
-    &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; {
-
-        &lt;span class=&quot;n&quot;&gt;listen&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8080&lt;/span&gt;;
-        &lt;span class=&quot;n&quot;&gt;server_name&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;localhost&lt;/span&gt;;
-        &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt; /&lt;span class=&quot;n&quot;&gt;usr&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;share&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;nginx&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt;;
-        &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt;;
-
-        &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; / {
-                &lt;span class=&quot;n&quot;&gt;try_files&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;uri&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;uri&lt;/span&gt;/ /&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt;;
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;build-your-angular-project&quot;&gt;Build your angular project&lt;/h2&gt;
-
-&lt;p&gt;If you are deploying your project in a subfolder like i am, you’ll have to specify the base href value. Note: I had to execute this in windows &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cmd.exe&lt;/code&gt; because of a weird bug in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ng cli&lt;/code&gt; where the folder absolute path was being appended.&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ng build &lt;span class=&quot;nt&quot;&gt;--prod&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--base-href&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/myawesome-app/&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;build-the-container-image&quot;&gt;Build the container image&lt;/h2&gt;
-
-&lt;p&gt;In the example below, I am using a private registry, you can omit the registry address if you are using docker hub. The period &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.&lt;/code&gt; at the end is intentional.&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker build &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; registry.example.com/myawesome-app:latest &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;push-the-image-to-your-registry&quot;&gt;Push the image to your registry&lt;/h2&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker push registry.example.com/myawesome-app:latest
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;create-a-deploy-configuration-in-kubernetes&quot;&gt;Create a deploy configuration in Kubernetes&lt;/h2&gt;
-
-&lt;p&gt;In the deploy configuration, make sure to set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;imagePullPolicy&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Always&lt;/code&gt; so it can pickup changes right away&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;apps/v1&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Deployment&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myawesome-app&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myawesome-app&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;replicas&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;matchLabels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myawesome-app&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myawesome-app&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry.example.com/myawesome-app&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myawesome-app&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;imagePullPolicy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Always&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;containerPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8080&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;create-a-service&quot;&gt;Create a service&lt;/h2&gt;
-
-&lt;p&gt;Expose your app using a service, you may choose to create a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeIP&lt;/code&gt; but I’ll be creating a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ClusterIP&lt;/code&gt; since I’ll be using an ingress configuration.&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Service&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myawesome-app&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myawesome-app&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ClusterIP&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myawesome-app&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8080&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;targetPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8080&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;TCP&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;create-ingress-rule&quot;&gt;Create ingress rule&lt;/h2&gt;
-
-&lt;p&gt;If you are going to use a sub directory in your host, the you’ll have to add a regex path: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(/|$)(.*)&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;networking.k8s.io/v1&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Ingress&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myawesome-app&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myawesome-app&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;www.mydomain.com&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/myawesome-app(/|$)(.*)&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;pathType&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Prefix&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;backend&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myawesome-app&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-              &lt;span class=&quot;na&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8080&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="docker" /><category term="angular" /><category term="linux" /><category term="nginx" /><summary type="html">To deploy an angular app to kubernetes, you’ll have to containerize you application. In this example, I am going to use docker. Create a docker file Place this in the root folder of your angular poroject FROM nginx:1.17.1-alpine COPY nginx.conf /etc/nginx/nginx.conf COPY /dist/myawesome-app /usr/share/nginx/html Create nginx config file Place this in the root folder of your angular project events{} http { include /etc/nginx/mime.types; server { listen 8080; server_name localhost; root /usr/share/nginx/html; index index.html; location / { try_files $uri $uri/ /index.html; } } } Build your angular project If you are deploying your project in a subfolder like i am, you’ll have to specify the base href value. Note: I had to execute this in windows cmd.exe because of a weird bug in ng cli where the folder absolute path was being appended. $ ng build --prod --base-href=&quot;/myawesome-app/&quot; Build the container image In the example below, I am using a private registry, you can omit the registry address if you are using docker hub. The period . at the end is intentional. $ docker build -t registry.example.com/myawesome-app:latest . Push the image to your registry $ docker push registry.example.com/myawesome-app:latest Create a deploy configuration in Kubernetes In the deploy configuration, make sure to set imagePullPolicy to Always so it can pickup changes right away apiVersion: apps/v1 kind: Deployment metadata: name: myawesome-app labels: app: myawesome-app spec: replicas: 1 selector: matchLabels: app: myawesome-app template: metadata: labels: app: myawesome-app spec: containers: - image: registry.example.com/myawesome-app name: myawesome-app imagePullPolicy: Always ports: - containerPort: 8080 Create a service Expose your app using a service, you may choose to create a NodeIP but I’ll be creating a ClusterIP since I’ll be using an ingress configuration. apiVersion: v1 kind: Service metadata: name: myawesome-app labels: app: myawesome-app spec: type: ClusterIP selector: app: myawesome-app ports: - port: 8080 targetPort: 8080 protocol: TCP Create ingress rule If you are going to use a sub directory in your host, the you’ll have to add a regex path: (/|$)(.*) apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: myawesome-app labels: app: myawesome-app spec: rules: - host: www.mydomain.com http: paths: - path: /myawesome-app(/|$)(.*) pathType: Prefix backend: service: name: myawesome-app port: number: 8080</summary></entry></feed>
+&lt;p&gt;For this to work, you either setup each of your computers or the router. By default, the router will use DNS of your Internet Service Provider (ISP). I changed this to point to the IP assigned by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MetalLB&lt;/code&gt; for the DNS server.&lt;/p&gt;</content><author><name></name></author><category term="coding" /><category term="docker" /><category term="linux" /><category term="kubernetes" /><category term="dns" /><summary type="html">If you are tired of typing ip addresses to access your home computers, you’ll need a private DNS server so you can just adress them as myservername. In this example, I will be using a kubernetes cluster that I already have setup. This also allows you to use it as a DNS forwarder Deplyment configuration apiVersion: apps/v1 kind: Deployment metadata: name: bind-deployment labels: app: bind spec: replicas: 1 selector: matchLabels: app: bind template: metadata: labels: app: bind spec: containers: - name: bind image: cytopia/bind env: - name: ALLOW_QUERY value: 192.168.1.0/24,127.0.0.1,localnets - name: EXTRA_HOSTS value: myserver01=192.168.1.101,myserver02=192.168.1.102,myserver03=192.168.1.103,myserver04=192.168.1.104 - name: DNS_FORWARDER value: 8.8.8.8 - name: ALLOW_RECURSION value: 192.168.1.0/24,127.0.0.1,localnets ports: - containerPort: 53 Service Configuration I used MetalLB for load balancing configuration. This will allow you to point a router or a computer to the DNS server with default port (53). apiVersion: v1 kind: Service metadata: name: bind-service spec: type: LoadBalancer selector: app: bind ports: - port: 53 targetPort: 53 protocol: UDP Router Configuration For this to work, you either setup each of your computers or the router. By default, the router will use DNS of your Internet Service Provider (ISP). I changed this to point to the IP assigned by MetalLB for the DNS server.</summary></entry></feed>
