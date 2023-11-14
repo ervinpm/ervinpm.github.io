@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-12-31T14:24:18-06:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Create a git server</title><link href="/coding/linux/git/2022/12/31/create-git-server.html" rel="alternate" type="text/html" title="Create a git server" /><published>2022-12-31T00:00:00-06:00</published><updated>2022-12-31T00:00:00-06:00</updated><id>/coding/linux/git/2022/12/31/create-git-server</id><content type="html" xml:base="/coding/linux/git/2022/12/31/create-git-server.html">&lt;p&gt;To create a git server&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2023-11-14T07:21:59-06:00</updated><id>/feed.xml</id><title type="html">$ ervinpm</title><subtitle>Still working on it</subtitle><entry><title type="html">Fixing UID or GID errors in podman</title><link href="/coding/linux/podman/2023/11/14/podman-uid-error.html" rel="alternate" type="text/html" title="Fixing UID or GID errors in podman" /><published>2023-11-14T00:00:00-06:00</published><updated>2023-11-14T00:00:00-06:00</updated><id>/coding/linux/podman/2023/11/14/podman-uid-error</id><content type="html" xml:base="/coding/linux/podman/2023/11/14/podman-uid-error.html">&lt;p&gt;When you encounter an error message like this &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;potentially insufficient UIDs or
+GIDs available in user namespace&lt;/code&gt; when running podman. Update the configuration
+in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/containers/storage.conf&lt;/code&gt; and set the value to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ignore_chown_errors = &quot;true&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="podman" /><summary type="html">When you encounter an error message like this potentially insufficient UIDs or GIDs available in user namespace when running podman. Update the configuration in /etc/containers/storage.conf and set the value to true.</summary></entry><entry><title type="html">Create a git server</title><link href="/coding/linux/git/2022/12/31/create-git-server.html" rel="alternate" type="text/html" title="Create a git server" /><published>2022-12-31T00:00:00-06:00</published><updated>2022-12-31T00:00:00-06:00</updated><id>/coding/linux/git/2022/12/31/create-git-server</id><content type="html" xml:base="/coding/linux/git/2022/12/31/create-git-server.html">&lt;p&gt;To create a git server&lt;/p&gt;
 
 &lt;h2 id=&quot;create-a-git-user&quot;&gt;Create a git user&lt;/h2&gt;
 
@@ -37,7 +42,23 @@
 &lt;h2 id=&quot;cloning-the-repo&quot;&gt;Cloning the repo&lt;/h2&gt;
 
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone git@myserver.home:hello-world.git
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="git" /><summary type="html">To create a git server</summary></entry><entry><title type="html">Apply wallpaper for DWM with LightDM</title><link href="/coding/linux/dwm/lightdm/2022/02/03/dwm-wallpaper.html" rel="alternate" type="text/html" title="Apply wallpaper for DWM with LightDM" /><published>2022-02-03T00:00:00-06:00</published><updated>2022-02-03T00:00:00-06:00</updated><id>/coding/linux/dwm/lightdm/2022/02/03/dwm-wallpaper</id><content type="html" xml:base="/coding/linux/dwm/lightdm/2022/02/03/dwm-wallpaper.html">&lt;p&gt;To apply a wallpaper in dwm and you have lightdm, you can use this solution&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="git" /><summary type="html">To create a git server</summary></entry><entry><title type="html">Listing SMB shares in linux</title><link href="/coding/linux/smb/2022/06/24/smb-list.html" rel="alternate" type="text/html" title="Listing SMB shares in linux" /><published>2022-06-24T01:00:00-05:00</published><updated>2022-06-24T01:00:00-05:00</updated><id>/coding/linux/smb/2022/06/24/smb-list</id><content type="html" xml:base="/coding/linux/smb/2022/06/24/smb-list.html">&lt;p&gt;To list out the shares in a host use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;smbclient&lt;/code&gt; program&lt;/p&gt;
+
+&lt;h2 id=&quot;list-shares&quot;&gt;List shares&lt;/h2&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;smbclient &lt;span class=&quot;nt&quot;&gt;-L&lt;/span&gt; host
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you get a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lp_load_ex: Max protocol NT1 is less than min protocol SMB2_02.&lt;/code&gt; 
+error, add the following entries to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/samba/smb.conf&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;div class=&quot;language-conf highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;protocol&lt;/span&gt; = &lt;span class=&quot;n&quot;&gt;SMB2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;protocol&lt;/span&gt; = &lt;span class=&quot;n&quot;&gt;SMB3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Restart after adding the two entries&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo systemctl restart smb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="smb" /><summary type="html">To list out the shares in a host use the smbclient program</summary></entry><entry><title type="html">Apply wallpaper for DWM with LightDM</title><link href="/coding/linux/dwm/lightdm/2022/02/03/dwm-wallpaper.html" rel="alternate" type="text/html" title="Apply wallpaper for DWM with LightDM" /><published>2022-02-03T00:00:00-06:00</published><updated>2022-02-03T00:00:00-06:00</updated><id>/coding/linux/dwm/lightdm/2022/02/03/dwm-wallpaper</id><content type="html" xml:base="/coding/linux/dwm/lightdm/2022/02/03/dwm-wallpaper.html">&lt;p&gt;To apply a wallpaper in dwm and you have lightdm, you can use this solution&lt;/p&gt;
 
 &lt;h2 id=&quot;install-feh&quot;&gt;Install feh&lt;/h2&gt;
 
@@ -85,7 +106,41 @@ dwm
 
 &lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
 
-&lt;p&gt;https://bbs.archlinux.org/viewtopic.php?id=191898&lt;/p&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="dwm" /><category term="lightdm" /><summary type="html">To apply a wallpaper in dwm and you have lightdm, you can use this solution</summary></entry><entry><title type="html">Kubernetes Cheat Sheet</title><link href="/coding/linux/kubernetes/2021/07/10/kubernetes-cheat-sheet.html" rel="alternate" type="text/html" title="Kubernetes Cheat Sheet" /><published>2021-07-10T01:00:00-05:00</published><updated>2021-07-10T01:00:00-05:00</updated><id>/coding/linux/kubernetes/2021/07/10/kubernetes-cheat-sheet</id><content type="html" xml:base="/coding/linux/kubernetes/2021/07/10/kubernetes-cheat-sheet.html">&lt;p&gt;This is my personal kubernetes cheat sheet. Most of these are taken from the kubernetes website&lt;/p&gt;
+&lt;p&gt;https://bbs.archlinux.org/viewtopic.php?id=191898&lt;/p&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="dwm" /><category term="lightdm" /><summary type="html">To apply a wallpaper in dwm and you have lightdm, you can use this solution</summary></entry><entry><title type="html">Build and Install picom in Manjaro</title><link href="/coding/linux/dwm/lightdm/2022/02/03/manjaro-picom.html" rel="alternate" type="text/html" title="Build and Install picom in Manjaro" /><published>2022-02-03T00:00:00-06:00</published><updated>2022-02-03T00:00:00-06:00</updated><id>/coding/linux/dwm/lightdm/2022/02/03/manjaro-picom</id><content type="html" xml:base="/coding/linux/dwm/lightdm/2022/02/03/manjaro-picom.html">&lt;h2 id=&quot;dependencies&quot;&gt;Dependencies&lt;/h2&gt;
+
+&lt;h3 id=&quot;meson&quot;&gt;meson&lt;/h3&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip3 &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;meson
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;libev&quot;&gt;libev&lt;/h2&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;pacman &lt;span class=&quot;nt&quot;&gt;-Syu&lt;/span&gt; libev
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;libconfig&quot;&gt;libconfig&lt;/h2&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;pacman &lt;span class=&quot;nt&quot;&gt;-Syu&lt;/span&gt; libconfig
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;install&quot;&gt;install&lt;/h2&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;meson configure &lt;span class=&quot;nt&quot;&gt;-Dprefix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;~/.local build
+ninja &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt; build &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;copy-sample-conf&quot;&gt;copy sample conf&lt;/h2&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; ~/.config/picom
+&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;picom.sample.conf ~/.config/picom/picom.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;picom&quot;&gt;picom&lt;/h2&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;picom &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;show-configured-vga&quot;&gt;Show configured VGA&lt;/h2&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mhwd &lt;span class=&quot;nt&quot;&gt;-li&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;fix-inactive-window-blur&quot;&gt;Fix inactive window blur&lt;/h2&gt;
+&lt;p&gt;https://giters.com/jonaburg/picom/issues/50&lt;/p&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="dwm" /><category term="lightdm" /><summary type="html">Dependencies</summary></entry><entry><title type="html">Kubernetes Cheat Sheet</title><link href="/coding/linux/kubernetes/2021/07/10/kubernetes-cheat-sheet.html" rel="alternate" type="text/html" title="Kubernetes Cheat Sheet" /><published>2021-07-10T01:00:00-05:00</published><updated>2021-07-10T01:00:00-05:00</updated><id>/coding/linux/kubernetes/2021/07/10/kubernetes-cheat-sheet</id><content type="html" xml:base="/coding/linux/kubernetes/2021/07/10/kubernetes-cheat-sheet.html">&lt;p&gt;This is my personal kubernetes cheat sheet. Most of these are taken from the kubernetes website&lt;/p&gt;
 
 &lt;h2 id=&quot;interacting-with-pods&quot;&gt;Interacting with Pods&lt;/h2&gt;
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;kubectl run &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--tty&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; busybox &lt;span class=&quot;nt&quot;&gt;--image&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;busybox &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; sh  &lt;span class=&quot;c&quot;&gt;# Run pod as interactive shell&lt;/span&gt;
@@ -227,130 +282,4 @@ kubectl scale &lt;span class=&quot;nt&quot;&gt;--replicas&lt;/span&gt;&lt;span c
   &lt;li&gt;Restart cmder and follow the wizard&lt;/li&gt;
   &lt;li&gt;If the configuration wizard does not start automatically, use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p10k configure&lt;/code&gt; command&lt;/li&gt;
   &lt;li&gt;Enjoy!&lt;/li&gt;
-&lt;/ol&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="windows" /><summary type="html">When you are stuck with windows and want to install a linux shell, you can install cygwin to have that unix feel :) Install Cygwin Head over to https://cygwin.com/install.html and install the version for your system Install apt-cyg for easy package management: $ wget https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg $ install apt-cyg /bin $ apt-cyg install zsh git gdb dos2unix openssh vim Update the home folder to your user folder by updating c:/cygwin64/etc/nsswitch.conf. Add this line: db_home: windows Install Cmder Head over to https://cmder.net/ and install the full version Download and install the recommended fonts from here: https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k Open cmder and and head over to the settings. Add a new task under Startup &amp;gt; Tasks by clicking on the + button. Under Task parameters, set an icon: -icon &quot;C:\cygwin64\Cygwin.ico&quot; In the commands specify to start with zsh: C:\cygwin64\bin\mintty.exe /usr/bin/zsh --login -i -new_console:d:%USERPROFILE% Install PowerLevel10k! Clone the p10k repository to your home folder and update the .zshrc file $ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k $ echo &apos;source ~/powerlevel10k/powerlevel10k.zsh-theme&apos; &amp;gt;&amp;gt;~/.zshrc Restart cmder and follow the wizard If the configuration wizard does not start automatically, use the p10k configure command Enjoy!</summary></entry><entry><title type="html">Let’s Encrypt certficate manager</title><link href="/coding/linux/kubernetes/certificate/lets%20encrypt/2021/03/23/installing-certificate-manager.html" rel="alternate" type="text/html" title="Let’s Encrypt certficate manager" /><published>2021-03-23T01:00:00-05:00</published><updated>2021-03-23T01:00:00-05:00</updated><id>/coding/linux/kubernetes/certificate/lets%20encrypt/2021/03/23/installing-certificate-manager</id><content type="html" xml:base="/coding/linux/kubernetes/certificate/lets%20encrypt/2021/03/23/installing-certificate-manager.html">&lt;p&gt;After setting up your very own Kubernetes instance, one of the first things that you want to do is spin up a simple web server like nginx. You’ll then notice that securing the server (https) will require you to issue certificates. However when you generate a self-signed one, the browser will still complain that it’s not as good as the real thing. Certificate Authorities will cost you money and you don’t want to spend a lot if you are just doing this to learn stuff. Let’s Encrypt lets you do this for free by providing an Automated Certificate Management Environment (ACME). Below are my notes on how I did it.&lt;/p&gt;
-
-&lt;h2 id=&quot;installing-cert-manager&quot;&gt;Installing cert manager&lt;/h2&gt;
-&lt;p&gt;Here is the yaml to install cert manager:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;testing-the-installation&quot;&gt;Testing the installation&lt;/h2&gt;
-&lt;p&gt;To test if it worked, use a self signed certificate&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; test-resources.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;After that, you can confirm by describing the created resources:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl describe certificate &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; cert-manager-test
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;You should have something like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Spec:
-  Common Name:  me.com
-  Issuer Ref:
-    Name:       test-selfsigned
-  Secret Name:  selfsigned-cert-tls
-Status:
-  Conditions:
-    Last Transition Time:  2021-03-05T18:14:30Z
-    Message:               Certificate is up to date and has not expired
-    Reason:                Ready
-    Status:                True
-    Type:                  Ready
-  Not After:               2021-04-09T18:14:21Z
-Events:
-  Type    Reason      Age   From          Message
-  ----    ------      ----  ----          -------
-  Normal  CertIssued  5s    cert-manager  Certificate issued successfully
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;After that, you may cleanup the test resources&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl delete &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; test-resources.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;installing-letsencrypt&quot;&gt;Installing letsencrypt&lt;/h3&gt;
-
-&lt;p&gt;This is a very easy step just execute the following&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;kubectl apply &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; letsencrypt-cluster-issuer.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
-&lt;p&gt;https://cert-manager.io/docs/installation/kubernetes/&lt;/p&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="kubernetes" /><category term="certificate" /><category term="lets encrypt" /><summary type="html">After setting up your very own Kubernetes instance, one of the first things that you want to do is spin up a simple web server like nginx. You’ll then notice that securing the server (https) will require you to issue certificates. However when you generate a self-signed one, the browser will still complain that it’s not as good as the real thing. Certificate Authorities will cost you money and you don’t want to spend a lot if you are just doing this to learn stuff. Let’s Encrypt lets you do this for free by providing an Automated Certificate Management Environment (ACME). Below are my notes on how I did it. Installing cert manager Here is the yaml to install cert manager: $ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.yaml Testing the installation To test if it worked, use a self signed certificate $ kubectl apply -f test-resources.yaml After that, you can confirm by describing the created resources: $ kubectl describe certificate -n cert-manager-test You should have something like this: Spec: Common Name: me.com Issuer Ref: Name: test-selfsigned Secret Name: selfsigned-cert-tls Status: Conditions: Last Transition Time: 2021-03-05T18:14:30Z Message: Certificate is up to date and has not expired Reason: Ready Status: True Type: Ready Not After: 2021-04-09T18:14:21Z Events: Type Reason Age From Message ---- ------ ---- ---- ------- Normal CertIssued 5s cert-manager Certificate issued successfully After that, you may cleanup the test resources $ kubectl delete -f test-resources.yaml Installing letsencrypt This is a very easy step just execute the following $ kubectl apply -f letsencrypt-cluster-issuer.yaml References https://cert-manager.io/docs/installation/kubernetes/</summary></entry><entry><title type="html">Updating cron tab editor</title><link href="/coding/linux/crontab/2021/03/22/update-crontab-editor.html" rel="alternate" type="text/html" title="Updating cron tab editor" /><published>2021-03-22T01:00:00-05:00</published><updated>2021-03-22T01:00:00-05:00</updated><id>/coding/linux/crontab/2021/03/22/update-crontab-editor</id><content type="html" xml:base="/coding/linux/crontab/2021/03/22/update-crontab-editor.html">&lt;p&gt;If you want to update the default editor of cron tab, you’ll have to update your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;h2 id=&quot;updating-bashrc&quot;&gt;Updating .bashrc&lt;/h2&gt;
-
-&lt;p&gt;Add the following line to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-bashrc&quot;&gt;export VISUAL=&quot;vim&quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&quot;reload-the-configuration&quot;&gt;Reload the configuration&lt;/h2&gt;
-
-&lt;p&gt;To reload without rebooting your machine execute the following command:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bashrc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="crontab" /><summary type="html">If you want to update the default editor of cron tab, you’ll have to update your .bashrc file. Updating .bashrc Add the following line to your .bashrc export VISUAL=&quot;vim&quot; Reload the configuration To reload without rebooting your machine execute the following command: $ source ~/.bashrc</summary></entry><entry><title type="html">Setting up Bind DNS Server in Kubernetes</title><link href="/coding/docker/linux/kubernetes/dns/2021/03/21/dockerize-angular-copy.html" rel="alternate" type="text/html" title="Setting up Bind DNS Server in Kubernetes" /><published>2021-03-21T01:00:00-05:00</published><updated>2021-03-21T01:00:00-05:00</updated><id>/coding/docker/linux/kubernetes/dns/2021/03/21/dockerize-angular%20copy</id><content type="html" xml:base="/coding/docker/linux/kubernetes/dns/2021/03/21/dockerize-angular-copy.html">&lt;p&gt;If you are tired of typing ip addresses to access your home computers, you’ll need a private DNS server so you can just adress them as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;myservername&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;In this example, I will be using a kubernetes cluster that I already have setup. This also allows you to use it as a DNS forwarder&lt;/p&gt;
-
-&lt;h2 id=&quot;deplyment-configuration&quot;&gt;Deplyment configuration&lt;/h2&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;apps/v1&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Deployment&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind-deployment&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;replicas&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;matchLabels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cytopia/bind&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ALLOW_QUERY&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;192.168.1.0/24,127.0.0.1,localnets&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;EXTRA_HOSTS&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myserver01=192.168.1.101,myserver02=192.168.1.102,myserver03=192.168.1.103,myserver04=192.168.1.104&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DNS_FORWARDER&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;8.8.8.8&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ALLOW_RECURSION&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;192.168.1.0/24,127.0.0.1,localnets&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;containerPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;53&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;service-configuration&quot;&gt;Service Configuration&lt;/h2&gt;
-
-&lt;p&gt;I used &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MetalLB&lt;/code&gt; for load balancing configuration. This will allow you to point a router or a computer to the DNS server with default port (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;53&lt;/code&gt;).&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Service&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind-service&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;LoadBalancer&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bind&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;53&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;targetPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;53&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;UDP&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;router-configuration&quot;&gt;Router Configuration&lt;/h2&gt;
-
-&lt;p&gt;For this to work, you either setup each of your computers or the router. By default, the router will use DNS of your Internet Service Provider (ISP). I changed this to point to the IP assigned by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MetalLB&lt;/code&gt; for the DNS server.&lt;/p&gt;</content><author><name></name></author><category term="coding" /><category term="docker" /><category term="linux" /><category term="kubernetes" /><category term="dns" /><summary type="html">If you are tired of typing ip addresses to access your home computers, you’ll need a private DNS server so you can just adress them as myservername. In this example, I will be using a kubernetes cluster that I already have setup. This also allows you to use it as a DNS forwarder Deplyment configuration apiVersion: apps/v1 kind: Deployment metadata: name: bind-deployment labels: app: bind spec: replicas: 1 selector: matchLabels: app: bind template: metadata: labels: app: bind spec: containers: - name: bind image: cytopia/bind env: - name: ALLOW_QUERY value: 192.168.1.0/24,127.0.0.1,localnets - name: EXTRA_HOSTS value: myserver01=192.168.1.101,myserver02=192.168.1.102,myserver03=192.168.1.103,myserver04=192.168.1.104 - name: DNS_FORWARDER value: 8.8.8.8 - name: ALLOW_RECURSION value: 192.168.1.0/24,127.0.0.1,localnets ports: - containerPort: 53 Service Configuration I used MetalLB for load balancing configuration. This will allow you to point a router or a computer to the DNS server with default port (53). apiVersion: v1 kind: Service metadata: name: bind-service spec: type: LoadBalancer selector: app: bind ports: - port: 53 targetPort: 53 protocol: UDP Router Configuration For this to work, you either setup each of your computers or the router. By default, the router will use DNS of your Internet Service Provider (ISP). I changed this to point to the IP assigned by MetalLB for the DNS server.</summary></entry></feed>
+&lt;/ol&gt;</content><author><name></name></author><category term="coding" /><category term="linux" /><category term="windows" /><summary type="html">When you are stuck with windows and want to install a linux shell, you can install cygwin to have that unix feel :) Install Cygwin Head over to https://cygwin.com/install.html and install the version for your system Install apt-cyg for easy package management: $ wget https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg $ install apt-cyg /bin $ apt-cyg install zsh git gdb dos2unix openssh vim Update the home folder to your user folder by updating c:/cygwin64/etc/nsswitch.conf. Add this line: db_home: windows Install Cmder Head over to https://cmder.net/ and install the full version Download and install the recommended fonts from here: https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k Open cmder and and head over to the settings. Add a new task under Startup &amp;gt; Tasks by clicking on the + button. Under Task parameters, set an icon: -icon &quot;C:\cygwin64\Cygwin.ico&quot; In the commands specify to start with zsh: C:\cygwin64\bin\mintty.exe /usr/bin/zsh --login -i -new_console:d:%USERPROFILE% Install PowerLevel10k! Clone the p10k repository to your home folder and update the .zshrc file $ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k $ echo &apos;source ~/powerlevel10k/powerlevel10k.zsh-theme&apos; &amp;gt;&amp;gt;~/.zshrc Restart cmder and follow the wizard If the configuration wizard does not start automatically, use the p10k configure command Enjoy!</summary></entry></feed>
