@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MRZ Scanner</title>
+    <script src="https://docs.opencv.org/master/opencv.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+</head>
+<body>
+    <video id="video" autoplay playsinline></video>
+    <canvas id="canvas" hidden></canvas>
+    <div id="result"></div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const resultDiv = document.getElementById('result');
+        let scanning = false;
+
+        // Initialize camera
+        async function startCamera() {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+            video.srcObject = stream;
+            await video.play();
+            scanMRZ();
+        }
+
+        // Main processing loop
+        async function scanMRZ() {
+            const worker = await Tesseract.createWorker('mrz'); // Use MRZ-optimized language data
+            scanning = true;
+
+            while (scanning) {
+                const ctx = canvas.getContext('2d');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                // OpenCV.js processing
+                let src = cv.imread(canvas);
+                let gray = new cv.Mat();
+                cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+                
+                // Blackhat morphology to isolate MRZ text
+                let kernel = cv.getStructuringElement(cv.MORPH_RECT, new cv.Size(25, 7));
+                cv.morphologyEx(gray, gray, cv.MORPH_BLACKHAT, kernel);
+
+                // Gradient computation and thresholding
+                let grad = new cv.Mat();
+                cv.Sobel(gray, grad, cv.CV_8U, 1, 0, -1);
+                cv.threshold(grad, grad, 0, 255, cv.THRESH_BINARY | cv.THRESH_OTSU);
+
+                // Find contours and extract MRZ region
+                let contours = new cv.MatVector();
+                cv.findContours(grad, contours, new cv.Mat(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+                
+                // ... (Contour filtering logic based on aspect ratio and position) :cite[4]
+
+                // OCR with Tesseract.js
+                const { data: { text } } = await worker.recognize(grad);
+                const parsedMRZ = parseMRZ(text);
+                
+                if (parsedMRZ.valid) {
+                    displayResults(parsedMRZ);
+                    scanning = false;
+                }
+
+                src.delete(); gray.delete(); grad.delete(); contours.delete();
+                await new Promise(resolve => requestAnimationFrame(resolve));
+            }
+            worker.terminate();
+        }
+
+        function parseMRZ(text) {
+            // Clean OCR errors (e.g., replace 'c'/'k' with '<') :cite[8]
+            const cleaned = text.replace(/[^A-Z0-9<]/g, '<').replace(/<+/g, '<');
+            
+            return {
+                raw: cleaned,
+                documentType: cleaned.substr(0, 1),
+                countryCode: cleaned.substr(2, 3),
+                // ... Additional parsing logic :cite[6]
+                valid: validateCheckDigits(cleaned) // Implement check digit validation
+            };
+        }
+
+        startCamera();
+    </script>
+</body>
+</html>
